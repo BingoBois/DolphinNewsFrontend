@@ -18,10 +18,15 @@ p.headerText:hover {
     text-decoration: underline;
 }
 
+a {
+    margin: 0px;
+}
+
 p.loginButton {
     margin:  0px;
     float: right;
     margin-right: 10px;
+    text-decoration: none;
 }
 
 p.loginButton:hover {

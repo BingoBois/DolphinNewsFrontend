@@ -1,0 +1,108 @@
+div.dataRow {
+    background-color: rgb(241, 241, 233);
+    align-items: center;
+}
+
+div.mainRow {
+    display: flex;
+    padding-top: 10px;
+    align-items: center;
+}
+
+div.minorRow {
+    display: flex;
+    align-items: center;
+}
+
+p.rowText {
+    margin:  0px;
+    margin-left: 8px;
+    cursor: pointer;
+    transition: text-shadow 0.6s ease;
+    text-shadow: 0px;
+}
+
+p.rowText:hover {
+    transition: text-shadow 0.4s ease;
+    text-shadow: 1px 1px #29a3c2
+}
+
+p.rowNumber {
+    margin:  0px;
+    margin-left: 8px;
+    font-size: 14px;
+    color: rgb(102, 102, 102);
+    margin-right: 3px;
+    vertical-align: top;
+}
+
+p.urlText {
+    margin:  0px;
+    margin-left: 8px;
+    font-size: 14px;
+    color: rgb(102, 102, 102);
+    margin-right: 3px;
+    cursor: pointer;
+}
+
+p.upvotes {
+    margin:  0px;
+    margin-left: 8px;
+    font-size: 12px;
+    color: rgb(102, 102, 102);
+    margin-right: 3px;
+}
+
+p.timeText {
+    margin:  0px;
+    font-size: 12px;
+    color: rgb(102, 102, 102);
+    margin-right: 3px;
+    cursor: pointer;
+}
+
+p.rowDivider {
+    margin:  0px;
+    font-size: 12px;
+    color: rgb(102, 102, 102);
+    margin-right: 4px;
+}
+
+p.userText {
+    margin:  0px;
+    margin-left: 0px;
+    font-size: 12px;
+    color: rgb(102, 102, 102);
+    margin-right: 3px;
+    cursor: pointer;
+}
+
+p.userText:hover {
+    text-decoration: underline
+}
+
+p.urlText:hover {
+    text-decoration: underline
+}
+
+p.timeText:hover {
+    text-decoration: underline
+}
+
+img.clickedArrow {
+    filter: grayscale(0%);
+    padding-bottom: 3px;
+    cursor: pointer;
+}
+
+img.upvoteArrow {
+    padding-bottom: 3px;
+    cursor: pointer;
+    transition: all 1.2s ease;
+    filter: grayscale(100%);
+}
+
+img.upvoteArrow:hover {
+    transition: all 1.4s ease;
+    filter: grayscale(0%);
+}

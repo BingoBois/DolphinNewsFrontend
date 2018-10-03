@@ -3,6 +3,7 @@ import * as DataHandler from '../api/DataHandler';
 import Store from '../store/Store';
 import '../stylesheets/headerStyles.css';
 import { observer } from 'mobx-react';
+import {Link} from 'react-router-dom'
 
 @observer
 export default class HeaderBar extends React.Component {
@@ -17,7 +18,6 @@ export default class HeaderBar extends React.Component {
     }
 
     render() {
-
         const onClickEvents: Function[] = [this.filterByNew];
         let headerArray = [ {option: 'welcome', loggedIn: true},
                             {option: 'new', loggedIn: false}, 
@@ -44,13 +44,16 @@ export default class HeaderBar extends React.Component {
 
         return (
             <div className="headerBar">
-                <div className="innerHeader">
-                    <img className="homeIcon" src={require('../assets/dolphin_icon.png')} width={20} height={20} style={{border: '1px solid white', margin: '2px'}}/>
-                    <p className="headerName" style={{fontWeight: 'bolder'}}>Dolphin News</p>
-                    {options}
-                </div>
+                    <div className="innerHeader">
+                        <Link to="/">
+                            <img className="homeIcon" src={require('../assets/dolphin_icon.png')} width={20} height={20} style={{border: '1px solid white', margin: '2px'}}/>
+                        </Link>
+                        <p className="headerName" style={{fontWeight: 'bolder'}}>Dolphin News</p>
+                        {options}
+                    </div>
+                
                 <div className="lastHeader">
-                    <p className="loginButton unselectable" style={{cursor: 'pointer'}} onClick={() => Store.token = (Store.token ? '' : "Hello")}>{Store.token ? 'logout' : 'login'}</p>
+                    <p className="loginButton unselectable" style={{cursor: 'pointer'}} >{Store.token ? <Link to="logout" style={{textDecoration: 'none'}}>logout</Link> : (<Link to="login" style={{textDecoration: 'none'}}>login</Link>)}</p>
                 </div>
             </div>
         )

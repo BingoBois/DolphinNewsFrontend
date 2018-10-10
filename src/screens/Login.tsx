@@ -1,8 +1,14 @@
 import * as React from 'react';
 import '../stylesheets/loginStyle.css';
 import { Link } from 'react-router-dom'
+import Store from '../store/Store'
+class Login extends React.Component<any, any> {
 
-class Login extends React.Component {
+
+    login(){
+        Store.token = "asdb22222";
+        this.props.history.push("/")
+    }
 
     public render() {
 
@@ -19,7 +25,7 @@ class Login extends React.Component {
                     <div className="login-form">
                         <input type="text" placeholder="username" />
                         <input type="password" placeholder="password" />
-                        <button>login</button>
+                        <button onClick={() => this.login()}>login</button>
                         <p className="message textContainer"> Not Registered? <Link to="/register">Create an account</Link></p>
                         <p className="message textMargin">Forgot Password? <Link to="/resetPassword">Reset Password</Link></p>
 

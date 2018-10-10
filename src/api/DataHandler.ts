@@ -7,7 +7,7 @@ enum HttpRequestType {
     Post
 }
 //@ts-ignore
-function Login(email: string, password: string){
+function login(email: string, password: string){
     return new Promise((resolve, rejects) => {
         fetch(api, {
             method: 'POST',
@@ -23,7 +23,7 @@ function Login(email: string, password: string){
     });
 }
 //@ts-ignore
-function Register(username: string, email: string, password: string){
+function register(username: string, email: string, password: string){
     return new Promise((resolve, rejects) => {
         fetch(api, {
             method: 'POST',
@@ -40,7 +40,7 @@ function Register(username: string, email: string, password: string){
     });
 }
 //@ts-ignore
-function ForgotPassword(email: string){
+function forgotPassword(email: string){
     return new Promise((resolve, rejects) => {
         fetch(api, {
             method: 'POST',

@@ -20,6 +20,7 @@ var Login = /** @class */ (function (_super) {
     function Login() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    // made for test purposes since no endpoint is being served
     Login.prototype.login = function () {
         Store.token = "asdb22222";
         this.props.history.push("/");

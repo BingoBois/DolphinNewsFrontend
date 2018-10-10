@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import Store from '../store/Store'
 class Login extends React.Component<any, any> {
 
-
+    // made for test purposes since no endpoint is being served
     login(){
         Store.token = "asdb22222";
         this.props.history.push("/")

@@ -41,7 +41,7 @@ var HttpRequestType;
     HttpRequestType[HttpRequestType["Post"] = 1] = "Post";
 })(HttpRequestType || (HttpRequestType = {}));
 //@ts-ignore
-function Login(email, password) {
+function login(email, password) {
     return new Promise(function (resolve, rejects) {
         fetch(api, {
             method: 'POST',
@@ -57,7 +57,7 @@ function Login(email, password) {
     });
 }
 //@ts-ignore
-function Register(username, email, password) {
+function register(username, email, password) {
     return new Promise(function (resolve, rejects) {
         fetch(api, {
             method: 'POST',
@@ -74,7 +74,7 @@ function Register(username, email, password) {
     });
 }
 //@ts-ignore
-function ForgotPassword(email) {
+function forgotPassword(email) {
     return new Promise(function (resolve, rejects) {
         fetch(api, {
             method: 'POST',

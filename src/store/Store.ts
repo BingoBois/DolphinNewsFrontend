@@ -2,7 +2,7 @@ import { observable } from 'mobx';
 
 class Store {
     
-    @observable token: string = '';
+    @observable token: string | undefined = undefined;
 
 }
 

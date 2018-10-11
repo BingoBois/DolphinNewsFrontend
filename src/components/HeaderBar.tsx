@@ -53,7 +53,7 @@ export default class HeaderBar extends React.Component {
                     </div>
                 
                 <div className="lastHeader">
-                    <p className="loginButton unselectable" style={{cursor: 'pointer'}} >{Store.token ? <Link to="logout" style={{textDecoration: 'none'}}>logout</Link> : (<Link to="login" style={{textDecoration: 'none'}}>login</Link>)}</p>
+                    <p className="loginButton unselectable" style={{cursor: 'pointer'}} >{Store.token ? <Link to="/" style={{textDecoration: 'none'}} onClick={()=> {Store.token = undefined}}>logout</Link> : (<Link to="login" style={{textDecoration: 'none'}}>login</Link>)}</p>
                 </div>
             </div>
         )

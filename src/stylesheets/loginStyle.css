@@ -42,7 +42,9 @@
 .form button:focus {
     opacity: 0.3;
 }
-
+p.message.textMargin {
+    padding-top: 5px;
+}
 .message.textContainer {
     margin: 10px 0 0;
     color: #b3b3b3;

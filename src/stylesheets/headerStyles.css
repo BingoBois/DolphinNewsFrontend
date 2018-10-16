@@ -41,7 +41,7 @@ p.loginButton:hover {
 }
 
 .headerBar {
-    background-color: rgb(236, 0, 217);
+    background-color: rgb(0, 236, 145);
     display: flex;
     justify-content: space-between;
 }

@@ -55,7 +55,12 @@ function forgotPassword(email: string){
     });
 }
 
-
+//@ts-ignore
+function getAllPosts(){
+    return new Promise((resolve, rejects) => {
+        fetch("localhost").then(response => resolve(response)).catch(err => rejects(err));
+    });
+}
 
 async function fetchData(url: string, requestType: HttpRequestType, bodyData?: string | object) {
     let settings: RequestInit = {

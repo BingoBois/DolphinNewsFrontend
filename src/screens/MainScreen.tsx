@@ -2,6 +2,7 @@ import * as React from 'react';
 import '../stylesheets/headerStyles.css';
 import * as testData from '../temp/testData.json';
 import Post from '../components/Post';
+import {getAllPosts} from '../api/DataHandler'
 
 interface testData {
     upvotes: number;
@@ -17,6 +18,8 @@ class MainScreen extends React.Component {
 
     public render() {
         
+        getAllPosts();
+
         //@ts-ignore
         const tableData = testData.map((data: testData, index: number) => {
             return (

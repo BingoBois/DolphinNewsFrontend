@@ -56,10 +56,24 @@ function forgotPassword(email: string){
 }
 
 //@ts-ignore
-function getAllPosts(){
-    return new Promise((resolve, rejects) => {
-        fetch("localhost").then(response => resolve(response)).catch(err => rejects(err));
-    });
+// export function getAllPosts(){
+//     return new Promise((resolve, rejects) => {
+//         fetch("http://localhost:3000/post/get/All", {
+//             method: 'GET',
+//             headers: {
+//                 Accept: 'application/json',
+//                 'Content-Type': 'application/json',
+//             }
+//         }).then(response => resolve(response)).catch(err => rejects(err));
+//     });
+// }
+
+export function getAllPosts(){
+    fetch("http://localhost:3000/post/get/All")
+  .then(blob => blob.json())
+  .then(data => {
+    console.table(data);
+  })
 }
 
 async function fetchData(url: string, requestType: HttpRequestType, bodyData?: string | object) {

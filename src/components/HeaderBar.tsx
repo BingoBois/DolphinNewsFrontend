@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as DataHandler from '../api/DataHandler';
 import Store from '../store/Store';
 import '../stylesheets/headerStyles.css';
 import { observer } from 'mobx-react';
@@ -14,7 +13,7 @@ export default class HeaderBar extends React.Component {
 
     createNewPost = () => {
         console.log('Sending new Post Creation to RabbitMQ server');
-        DataHandler.createNewPost({});
+        //DataHandler.createNewPost({});
     }
 
     render() {

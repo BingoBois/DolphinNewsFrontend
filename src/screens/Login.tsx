@@ -26,7 +26,7 @@ class Login extends React.Component<any, any> {
                         <input type="text" placeholder="username" />
                         <input type="password" placeholder="password" />
                         <button onClick={() => this.login()}>login</button>
-                        <p className="message textContainer"> Not Registered? <Link to="/register">Create a user</Link></p>
+                        <p className="message textContainer"> Not Registered? <Link to="/register">Create an account yea boi</Link></p>
                         <p className="message textMargin">Forgot Password? <Link to="/resetPassword">Reset Password</Link></p>
 
                     </div>

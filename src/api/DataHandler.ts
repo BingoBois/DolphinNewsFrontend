@@ -1,15 +1,16 @@
 import fetch from 'node-fetch';
+import UserObject from '../types/user';
 
-const api = "localhost:3306" //"80.167.223.178";
+const API_URL = "http://80.240.24.203:3000" //"80.167.223.178";
 
 enum HttpRequestType {
     Get,
     Post
 }
-//@ts-ignore
-function login(email: string, password: string){
+
+export function login(email: string, password: string){
     return new Promise((resolve, rejects) => {
-        fetch(api, {
+        fetch(API_URL, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -22,53 +23,80 @@ function login(email: string, password: string){
         }).then(response => resolve(response)).catch(err => rejects(err));
     });
 }
-//@ts-ignore
-function register(username: string, email: string, password: string){
-    return new Promise((resolve, rejects) => {
-        fetch(api, {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: email,
-                username: username,
-                password: password
-            }),
-        }).then(response => resolve(response)).catch(err => rejects(err));
-    });
-}
-//@ts-ignore
-function forgotPassword(email: string){
-    return new Promise((resolve, rejects) => {
-        fetch(api, {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: email,
-            }),
-        }).then(response => resolve(response)).catch(err => rejects(err));
-    });
+
+interface tempResponse {
+    message: string;
 }
 
-
-async function fetchData(url: string, requestType: HttpRequestType, bodyData?: string | object) {
-    let settings: RequestInit = {
-        method: (requestType === HttpRequestType.Get ? 'GET' : 'POST')
+export function register(username: string | undefined, email: string | undefined, password: string | undefined) {
+    if (!username) {
+        throw new Error("Username cannot be empty");
+    } else if (!email) {
+        throw new Error("Email cannot be empty");
+    } else if (!password) {
+        throw new Error("Password cannot be empty");
     }
-    settings.body = (bodyData ? (typeof(bodyData) === 'object' ? JSON.stringify(bodyData) : bodyData) : undefined);
-    
-    //@ts-ignore
-    const data = await fetch(`${IP}/new`, settings).catch((err) => {
-        console.log(`An error ocurred!: ${JSON.stringify(err)}`);
+    const newUser: UserObject = {
+        email: email,
+        karma: 0,
+        password: password,
+        role: "member",
+        username: username
+    }
+    console.log(newUser);
+    fetchData('auth/register', HttpRequestType.Post, JSON.stringify(newUser)).then((response) => {
+        response.json().then((data) => {
+            let resp = <tempResponse> data;
+            console.log(resp.message);
+        })
+    }).catch((err) => {
+        console.log(err);
     });
-    console.log(data);
 }
 
-export function createNewPost(post: object) {
-    fetchData(api, HttpRequestType.Post, post);
+/*
+
+TODO
+
+export function forgotPassword(email: string) {
+    return new Promise((resolve, rejects) => {
+        fetch(API_URL, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email,
+            }),
+        }).then(response => resolve(response)).catch(err => rejects(err));
+    });
 }
+
+*/
+
+
+export function fetchData(url: string, requestType: HttpRequestType, bodyData?: string): Promise<Response> {
+    return new Promise((resolve, reject) => {
+        const method = (requestType === HttpRequestType.Get ? 'GET' : 'POST');
+        const options = {
+            method: method,
+            headers: (method === 'POST' ? {
+                'Content-Type': 'application/json'
+            } : undefined),
+            body: bodyData ? bodyData : undefined
+        }
+        fetch(`${API_URL}/${url}`, options).then((value) => {
+            return value;
+        }).catch((err) => {
+            reject(err);
+        });
+    })
+
+}
+
+/*
+export function createNewPost(post: object) {
+    fetchData(API_URL, HttpRequestType.Post, post);
+}
+*/

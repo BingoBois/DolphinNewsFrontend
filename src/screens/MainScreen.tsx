@@ -16,18 +16,18 @@ interface testData {
 class MainScreen extends React.Component {
 
     public render() {
-        
+
         //@ts-ignore
         const tableData = testData.map((data: testData, index: number) => {
             return (
-                <Post 
-                    key={index} 
-                    title={data.title} 
-                    index={index + 1} 
-                    url={data.url} 
-                    upvotes={data.upvotes} 
+                <Post
+                    key={index}
+                    title={data.title}
+                    index={index + 1}
+                    url={data.url}
+                    upvotes={data.upvotes}
                     id={data.id}
-                    user={data.user} 
+                    user={data.user}
                     time={data.time}
                     commentCount={data.commentCount}
                 />

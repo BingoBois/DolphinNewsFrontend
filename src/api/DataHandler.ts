@@ -75,6 +75,7 @@ export function forgotPassword(email: string) {
 
 */
 
+
 export function fetchData(url: string, requestType: HttpRequestType, bodyData?: string): Promise<Response> {
     return new Promise((resolve, reject) => {
         const method = (requestType === HttpRequestType.Get ? 'GET' : 'POST');
@@ -91,6 +92,7 @@ export function fetchData(url: string, requestType: HttpRequestType, bodyData?: 
             reject(err);
         });
     })
+
 }
 
 /*

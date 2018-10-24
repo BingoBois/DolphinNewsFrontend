@@ -5,7 +5,7 @@
   "dependencies": {
     "amqplib": "0.5.2",
     "mobx": "^5.5.0",
-    "mobx-react": "^5.2.8",
+    "mobx-react": "^5.3.1",
     "node-fetch": "2.2.0",
     "react": "^16.5.1",
     "react-dom": "^16.5.1",

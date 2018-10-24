@@ -95,6 +95,15 @@ export function fetchData(url: string, requestType: HttpRequestType, bodyData?: 
 
 }
 
+export function getAllPosts(){
+    return new Promise((resolve, rejects) => {
+        fetch("http://localhost:3001/post/get/All")
+        .then(response => response.json())
+        .then(data => resolve(data))
+        .catch(err => rejects(err));
+    });
+}
+
 /*
 export function createNewPost(post: object) {
     fetchData(API_URL, HttpRequestType.Post, post);

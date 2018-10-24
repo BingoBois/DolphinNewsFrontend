@@ -2,6 +2,9 @@ import * as React from 'react';
 import '../stylesheets/headerStyles.css';
 import * as testData from '../temp/testData.json';
 import Post from '../components/Post';
+import {getAllPosts} from '../api/DataHandler';
+//import { resolve } from 'url';
+
 
 interface testData {
     upvotes: number;
@@ -13,9 +16,35 @@ interface testData {
     commentCount: number;
 }
 
-class MainScreen extends React.Component {
+interface realData {
+    userID: number,
+    user: string,
+    userpost: string,
+    postId: number,
+    url: string,
+    time: string
+}
+
+
+
+class MainScreen extends React.Component<{}, realData> {
+
+
+    state: realData = {
+    userID: 0,
+    user: "user0",
+    userpost: "thismightwork",
+    postId: 0,
+    url: "www.work.dk",
+    time: "31-12-2018"
+    }
 
     public render() {
+        console.log(getAllPosts());
+
+        console.log(this.state.user);
+        
+
 
         //@ts-ignore
         const tableData = testData.map((data: testData, index: number) => {

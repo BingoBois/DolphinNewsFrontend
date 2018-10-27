@@ -1,64 +1,53 @@
 import * as React from 'react';
 import '../stylesheets/headerStyles.css';
-import * as testData from '../temp/testData.json';
 import Post from '../components/Post';
 import {getAllPosts} from '../api/DataHandler';
-//import { resolve } from 'url';
+import {observer} from 'mobx-react';
+import { PostObject } from 'src/types/post';
 
-
-interface testData {
-    upvotes: number;
-    title: string;
-    url: string;
-    id: number;
-    user: string;
-    time: string;
-    commentCount: number;
+interface mainScreenState {
+posts: Array<PostObject> | undefined;
 }
 
-interface realData {
-    userID: number,
-    user: string,
-    userpost: string,
-    postId: number,
-    url: string,
-    time: string
-}
+@observer 
+class MainScreen extends React.Component<any, mainScreenState> {
 
+    state = {
+        posts: undefined
+    }
 
+    componentWillMount(){
+        this.getAllPostFunction();
+    }
 
-class MainScreen extends React.Component<{}, realData> {
-
-
-    state: realData = {
-    userID: 0,
-    user: "user0",
-    userpost: "thismightwork",
-    postId: 0,
-    url: "www.work.dk",
-    time: "31-12-2018"
+   getAllPostFunction(){
+    getAllPosts().then((data) => {
+        console.log(data);
+        this.setState({posts : data}, () => {
+            console.log(this.state.posts);
+        });
+       
+       }); 
     }
 
     public render() {
-        console.log(getAllPosts());
-
-        console.log(this.state.user);
-        
-
 
         //@ts-ignore
-        const tableData = testData.map((data: testData, index: number) => {
+        const tableData = this.state.posts && this.state.posts.map((data: PostObject, index: number) => {
             return (
                 <Post
-                    key={index}
-                    title={data.title}
-                    index={index + 1}
-                    url={data.url}
-                    upvotes={data.upvotes}
-                    id={data.id}
-                    user={data.user}
-                    time={data.time}
-                    commentCount={data.commentCount}
+                  
+                key={index}
+                id = {data.postID}
+                index = {index + 1}
+                title = {data.postTitle}
+                user= {data.userName}
+                url = {data.postURL}
+                time= {data.postTime}
+                upvotes ={21}
+                commentCount = {27}
+                postText = {data.postText}
+
                 />
             )
         })
@@ -71,5 +60,4 @@ class MainScreen extends React.Component<{}, realData> {
     }
 
 }
-
 export default MainScreen;

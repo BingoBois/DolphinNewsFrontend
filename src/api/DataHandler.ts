@@ -1,5 +1,7 @@
 import fetch from 'node-fetch';
 import UserObject from '../types/user';
+import { PostObject } from 'src/types/post';
+
 
 const API_URL = "http://80.240.24.203:3000" //"80.167.223.178";
 
@@ -95,11 +97,12 @@ export function fetchData(url: string, requestType: HttpRequestType, bodyData?: 
 
 }
 
-export function getAllPosts(){
+
+export function getAllPosts(): Promise<Array<PostObject>>{
     return new Promise((resolve, rejects) => {
-        fetch("http://localhost:3001/post/get/All")
+        fetch(API_URL + "/post/get/All")
         .then(response => response.json())
-        .then(data => resolve(data))
+        .then(data => resolve(JSON.parse(data)))
         .catch(err => rejects(err));
     });
 }

@@ -8,5 +8,7 @@ export interface PostObject{
     hanesst_id: number,
     postText: string,
     postID: number,
-    postTime: string
+    postTime: string,
+    postVotes: number,
+    postComments: number
 }

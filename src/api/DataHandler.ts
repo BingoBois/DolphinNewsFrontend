@@ -100,9 +100,28 @@ export function fetchData(url: string, requestType: HttpRequestType, bodyData?: 
 }
 
 
+export function getPostById(postId: number): Promise<Array<PostObject>>{
+    return new Promise((resolve, rejects) => {
+        fetch( API_URL+ `/post/get/byid/${postId}`)
+        .then(response => response.json())
+        .then(data => resolve(JSON.parse(data)))
+        .catch(err => rejects(err));
+    });
+}
+
+
 export function getAllPosts(): Promise<Array<PostObject>>{
     return new Promise((resolve, rejects) => {
         fetch( API_URL+ "/post/get/All")
+        .then(response => response.json())
+        .then(data => resolve(JSON.parse(data)))
+        .catch(err => rejects(err));
+    });
+}
+
+export function getCommetsFromPostId(postId: number): Promise<Array<PostObject>>{
+    return new Promise((resolve, rejects) => {
+        fetch( API_URL+ `/comment/get/bypost/${postId}`)
         .then(response => response.json())
         .then(data => resolve(JSON.parse(data)))
         .catch(err => rejects(err));

@@ -25,9 +25,7 @@ class MainScreen extends React.Component<any, mainScreenState> {
 
    getAllPostFunction(){
     getAllPosts().then((data) => {
-        console.log(data);
         this.setState({posts : data});
-       
        }); 
     }
     

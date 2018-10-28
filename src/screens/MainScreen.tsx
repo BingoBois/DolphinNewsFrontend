@@ -1,12 +1,13 @@
 import * as React from 'react';
 import '../stylesheets/headerStyles.css';
 import Post from '../components/Post';
+import {getAllPosts} from '../api/DataHandler';
 import {observer} from 'mobx-react';
 import { PostObject } from 'src/types/post';
 import {CommentObject} from 'src/types/comment';
 import store from '../store/Store'
 
-interface mainScreenState {
+interface mainScreenState { 
 posts: Array<PostObject> | undefined;
 comments: Array<CommentObject> | undefined;
 }
@@ -18,6 +19,7 @@ class MainScreen extends React.Component<any, mainScreenState> {
         posts: undefined,
         comments: undefined
     }
+
 
     componentDidMount(){
         store.getAllPosts()
@@ -59,6 +61,7 @@ class MainScreen extends React.Component<any, mainScreenState> {
         )
         })
 
+
         return (
             <div className="MainScreen">
                 {tableData}
@@ -67,6 +70,7 @@ class MainScreen extends React.Component<any, mainScreenState> {
                 <h2 style={{marginBottom: 40}} onClick={() => {
                     store.updatePosts()
                 }}>More</h2>
+
             </div>
         );
     }

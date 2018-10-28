@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link }  from 'react-router-dom';
 import '../stylesheets/rowStyles.css';
 import {getCommentAmount, getVotesAmounts} from '../api/DataHandler'
 
@@ -122,7 +123,7 @@ export default class Post extends React.Component<PostProps, PostState> {
                     <p className="rowDivider unselectable">|</p>
                     <p className="userText">hide</p>
                     <p className="rowDivider unselectable">|</p>
-                    <p className="userText">{`${this.state.comments} comments`}</p>
+                    <Link to={`/post/${this.props.id}`} className="commentText"><p className="userText" >{`${this.props.commentCount} comments`}</p></Link>
                 </div>
             </div>
         )

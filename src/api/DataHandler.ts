@@ -58,6 +58,46 @@ export function register(username: string | undefined, email: string | undefined
     });
 }
 
+export function getPosts(index: number, amount: number){
+    return new Promise((resolve, rejects) => {
+        fetch(API_URL+'/post/getPosts',{ 
+            method: 'POST',
+            body:    JSON.stringify({
+                index: index,
+                amount: amount
+            }),
+            headers: { 'Content-Type': 'application/json' },
+        })
+        .then(res => resolve(res.json()))
+    });
+}
+
+export function getCommentAmount(postId: number){
+    return new Promise((resolve, rejects) => {
+        fetch(API_URL+'/post/getCommentAmount',{ 
+            method: 'POST',
+            body:    JSON.stringify({
+                postId: postId
+            }),
+            headers: { 'Content-Type': 'application/json' },
+        })
+        .then(res => resolve(res.json()))
+    });
+}
+
+export function getVotesAmounts(postId: number){
+    return new Promise((resolve, rejects) => {
+        fetch(API_URL+'/post/getVotes',{ 
+            method: 'POST',
+            body:    JSON.stringify({
+                postId: postId
+            }),
+            headers: { 'Content-Type': 'application/json' },
+        })
+        .then(res => resolve(res.json()))
+    });
+}
+       
 /*
 
 TODO

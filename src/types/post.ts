@@ -1,5 +1,5 @@
 export interface PostObject{
-    userName: string,
+    username: string,
     post_type: string,
     pwd_hash: string,
     post_title: string,
@@ -7,8 +7,8 @@ export interface PostObject{
     post_parent: number,
     hanesst_id: number,
     post_text: string,
-    postId: number,
-    postTime: string,
+    id: number,
+    time: string,
     postVotes: number,
     postComments: number
 }

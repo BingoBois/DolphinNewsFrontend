@@ -1,7 +1,6 @@
 import * as React from 'react';
 import '../stylesheets/headerStyles.css';
 import Post from '../components/Post';
-import {getAllPosts} from '../api/DataHandler';
 import {observer} from 'mobx-react';
 import { PostObject } from 'src/types/post';
 import {CommentObject} from 'src/types/comment';

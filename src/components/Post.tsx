@@ -123,7 +123,7 @@ export default class Post extends React.Component<PostProps, PostState> {
                     <p className="rowDivider unselectable">|</p>
                     <p className="userText">hide</p>
                     <p className="rowDivider unselectable">|</p>
-                    <Link to={`/post/${this.props.id}`} className="commentText"><p className="userText" >{`${this.props.commentCount} comments`}</p></Link>
+                    <Link to={`/post/${this.props.id}`} className="commentText"><p className="userText" >{`${this.state.comments} comments`}</p></Link>
                 </div>
             </div>
         )

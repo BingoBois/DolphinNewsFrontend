@@ -7,7 +7,7 @@ export interface PostObject{
     post_parent: number,
     hanesst_id: number,
     post_text: string,
-    postID: number,
+    postId: number,
     postTime: string,
     postVotes: number,
     postComments: number

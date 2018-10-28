@@ -9,6 +9,7 @@ import {
 import Login from './screens/Login';
 import Register from './screens/Register';
 import ResetPassword from './screens/ResetPassword';
+import PostScreen from './screens/PostScreen';
 
 class App extends React.Component {
 
@@ -21,6 +22,7 @@ class App extends React.Component {
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/register" component={Register} />
                     <Route exact path="/resetPassword" component={ResetPassword} />
+                    <Route path="/post" component={PostScreen} />
                 </div>
             </Router>
         )

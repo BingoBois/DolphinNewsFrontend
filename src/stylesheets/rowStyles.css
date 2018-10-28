@@ -106,3 +106,7 @@ img.upvoteArrow:hover {
     transition: all 1.4s ease;
     filter: grayscale(0%);
 }
+
+a.commentText {
+    text-decoration: none;
+}

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "amqplib": "0.5.2",
+    "fetch-helpers": "^5.1.0",
     "mobx": "^5.5.0",
     "mobx-react": "^5.3.1",
     "node-fetch": "2.2.0",

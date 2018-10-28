@@ -1,5 +1,8 @@
 import fetch from 'node-fetch';
 import UserObject from '../types/user';
+import { PostObject } from 'src/types/post';
+import { CommentObject } from 'src/types/comment';
+
 
 const API_URL = "http://80.240.24.203:3000" //"80.167.223.178";
 
@@ -94,6 +97,55 @@ export function fetchData(url: string, requestType: HttpRequestType, bodyData?: 
     })
 
 }
+
+
+export function getAllPosts(): Promise<Array<PostObject>>{
+    return new Promise((resolve, rejects) => {
+        fetch( "http://localhost:3000" + "/post/get/All")
+        .then(response => response.json())
+        .then(data => resolve(JSON.parse(data)))
+        .catch(err => rejects(err));
+    });
+}
+
+export function getAllPostVotes(): Promise<Array<PostObject>>{
+    return new Promise((resolve, rejects) => {
+        fetch( "http://localhost:3000" + "/post/get/all/postwithvotes")
+        .then(response => response.json())
+        .then(data => resolve(JSON.parse(data)))
+        .catch(err => rejects(err));
+    });
+}
+
+export function getAmountofCommentsInPost(): Promise<Array<PostObject>>{
+    return new Promise((resolve, rejects) => {
+        fetch( "http://localhost:3000" + "/post/get/all/commentamount")
+        .then(response => response.json())
+        .then(data => resolve(JSON.parse(data)))
+        .catch(err => rejects(err));
+    });
+}
+
+export function getAllCommentsWithVote(): Promise<Array<CommentObject>>{
+    return new Promise((resolve, rejects) => {
+        fetch( "http://localhost:3000" + "/comment/get/all/withvote")
+        .then(response => response.json())
+        .then(data => resolve(JSON.parse(data)))
+        .catch(err => rejects(err));
+    });
+}
+
+export function getAllComments(): Promise<Array<CommentObject>>{
+    return new Promise((resolve, rejects) => {
+        fetch( "http://localhost:3000" + "/comment/get/all")
+        .then(response => response.json())
+        .then(data => resolve(JSON.parse(data)))
+        .catch(err => rejects(err));
+    });
+}
+
+
+
 
 /*
 export function createNewPost(post: object) {

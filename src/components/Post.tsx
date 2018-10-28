@@ -10,6 +10,7 @@ interface PostProps {
     user: string;
     time: string;
     commentCount: number;
+    postText: string;
 }
 
 interface timeObject {
@@ -93,7 +94,7 @@ export default class Post extends React.Component<PostProps> {
                     <img className="upvoteArrow" src={require('../assets/green_arrow.png')} onClick={(e) => this.upvote(e)}/>
                     <p className="rowText" ref={`rowText${this.props.id}`}>{this.props.title}</p>
                     <p className="urlText">({this.extractDomain(this.props.url)})</p>
-                </div>
+                    </div>
                 <div className="minorRow">
                     <p className="upvotes" ref={`upvotes${this.props.id}`} style={{}}>{this.props.upvotes} points by</p>
                     <p className="userText">{this.props.user}</p>

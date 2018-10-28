@@ -5,6 +5,7 @@ import { CommentObject } from 'src/types/comment';
 
 
 const API_URL = "http://80.240.24.203:3000" //"80.167.223.178";
+//const LOCAL_URL = "http://localhost:3000";
 
 enum HttpRequestType {
     Get,
@@ -101,7 +102,7 @@ export function fetchData(url: string, requestType: HttpRequestType, bodyData?: 
 
 export function getAllPosts(): Promise<Array<PostObject>>{
     return new Promise((resolve, rejects) => {
-        fetch( "http://localhost:3000" + "/post/get/All")
+        fetch( API_URL+ "/post/get/All")
         .then(response => response.json())
         .then(data => resolve(JSON.parse(data)))
         .catch(err => rejects(err));
@@ -110,7 +111,7 @@ export function getAllPosts(): Promise<Array<PostObject>>{
 
 export function getAllPostVotes(): Promise<Array<PostObject>>{
     return new Promise((resolve, rejects) => {
-        fetch( "http://localhost:3000" + "/post/get/all/postwithvotes")
+        fetch( API_URL + "/post/get/all/postwithvotes")
         .then(response => response.json())
         .then(data => resolve(JSON.parse(data)))
         .catch(err => rejects(err));
@@ -119,7 +120,7 @@ export function getAllPostVotes(): Promise<Array<PostObject>>{
 
 export function getAmountofCommentsInPost(): Promise<Array<PostObject>>{
     return new Promise((resolve, rejects) => {
-        fetch( "http://localhost:3000" + "/post/get/all/commentamount")
+        fetch( API_URL + "/post/get/all/commentamount")
         .then(response => response.json())
         .then(data => resolve(JSON.parse(data)))
         .catch(err => rejects(err));
@@ -128,7 +129,7 @@ export function getAmountofCommentsInPost(): Promise<Array<PostObject>>{
 
 export function getAllCommentsWithVote(): Promise<Array<CommentObject>>{
     return new Promise((resolve, rejects) => {
-        fetch( "http://localhost:3000" + "/comment/get/all/withvote")
+        fetch( API_URL + "/comment/get/all/withvote")
         .then(response => response.json())
         .then(data => resolve(JSON.parse(data)))
         .catch(err => rejects(err));
@@ -137,7 +138,7 @@ export function getAllCommentsWithVote(): Promise<Array<CommentObject>>{
 
 export function getAllComments(): Promise<Array<CommentObject>>{
     return new Promise((resolve, rejects) => {
-        fetch( "http://localhost:3000" + "/comment/get/all")
+        fetch(API_URL+ "/comment/get/all")
         .then(response => response.json())
         .then(data => resolve(JSON.parse(data)))
         .catch(err => rejects(err));

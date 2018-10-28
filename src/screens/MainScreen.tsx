@@ -65,13 +65,13 @@ class MainScreen extends React.Component<any, mainScreenState> {
                 key={index}
                 id = {data.postID}
                 index = {index + 1}
-                title = {data.postTitle}
+                title = {data.post_title}
                 user= {data.userName}
-                url = {data.postURL}
+                url = {data.post_url}
                 time= {data.postTime}
                 upvotes ={21}
                 commentCount = {27}
-                postText = {data.postText}
+                postText = {data.post_text}
 
                 />
             )
@@ -83,7 +83,10 @@ class MainScreen extends React.Component<any, mainScreenState> {
 
         return(
             
-            <p>{data.commentContent}</p>
+            <div key={index}>
+                <p>{data.commentContent}</p>
+            </div>
+            
        
         )
         })
@@ -93,6 +96,8 @@ class MainScreen extends React.Component<any, mainScreenState> {
         return (
             <div className="MainScreen">
                 {tableData}
+                <br/>
+                <h4>Comment Test</h4>
                 {commentTableTest}
             </div>
         );

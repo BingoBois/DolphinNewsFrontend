@@ -1,10 +1,10 @@
 import * as React from 'react';
 import '../stylesheets/headerStyles.css';
 import Post from '../components/Post';
-import {getAllPosts, getAllComments} from '../api/DataHandler';
 import {observer} from 'mobx-react';
 import { PostObject } from 'src/types/post';
 import {CommentObject} from 'src/types/comment';
+import store from '../store/Store'
 
 interface mainScreenState {
 posts: Array<PostObject> | undefined;
@@ -19,32 +19,10 @@ class MainScreen extends React.Component<any, mainScreenState> {
         comments: undefined
     }
 
-    componentWillMount(){
-        this.getAllPostFunction();
-        this.getAllCommentsFunction();
+    componentDidMount(){
+        store.getAllPosts()
     }
-
-   getAllPostFunction(){
-    getAllPosts().then((data) => {
-        console.log(data);
-        this.setState({posts : data}, () => {
-            console.log(this.state.posts);
-        });
-       
-       }); 
-    }
-
-    getAllCommentsFunction(){
-        getAllComments().then((data) => {
-            console.log(data);
-            this.setState({comments : data}, () => {
-                console.log(this.state.comments);
-            })
-        })
-    }
-
     
-
     public render() {
 
         /*
@@ -54,25 +32,17 @@ class MainScreen extends React.Component<any, mainScreenState> {
         const test = "what the hell";
         */
 
-      
-
-        //@ts-ignore
-        const tableData = this.state.posts && this.state.posts.map((data: PostObject, index: number) => {
-            
+        const tableData = store.posts.map((data: PostObject, index: number) => {
             return (
                 <Post
-                  
                 key={index}
-                id = {data.postID}
+                id = {data.id}
                 index = {index + 1}
                 title = {data.post_title}
-                user= {data.userName}
+                user= {data.username}
                 url = {data.post_url}
-                time= {data.postTime}
-                upvotes ={21}
-                commentCount = {27}
+                time= {data.time}
                 postText = {data.post_text}
-
                 />
             )
         })
@@ -86,19 +56,17 @@ class MainScreen extends React.Component<any, mainScreenState> {
             <div key={index}>
                 <p>{data.commentContent}</p>
             </div>
-            
-       
         )
         })
-
-   
 
         return (
             <div className="MainScreen">
                 {tableData}
                 <br/>
-                <h4>Comment Test</h4>
                 {commentTableTest}
+                <h2 style={{marginBottom: 40}} onClick={() => {
+                    store.updatePosts()
+                }}>More</h2>
             </div>
         );
     }

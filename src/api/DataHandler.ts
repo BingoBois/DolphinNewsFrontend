@@ -4,7 +4,7 @@ import { PostObject } from 'src/types/post';
 import { CommentObject } from 'src/types/comment';
 
 
-const API_URL = "http://80.240.24.203:3000" //"80.167.223.178";
+const API_URL = "http://83.88.66.128:3333" //"80.167.223.178";
 //const LOCAL_URL = "http://localhost:3000";
 
 enum HttpRequestType {
@@ -58,6 +58,46 @@ export function register(username: string | undefined, email: string | undefined
     });
 }
 
+export function getPosts(index: number, amount: number){
+    return new Promise((resolve, rejects) => {
+        fetch('http://83.88.66.128:3333/post/getPosts',{ 
+            method: 'POST',
+            body:    JSON.stringify({
+                index: index,
+                amount: amount
+            }),
+            headers: { 'Content-Type': 'application/json' },
+        })
+        .then(res => resolve(res.json()))
+    });
+}
+
+export function getCommentAmount(postId: number){
+    return new Promise((resolve, rejects) => {
+        fetch('http://83.88.66.128:3333/post/getCommentAmount',{ 
+            method: 'POST',
+            body:    JSON.stringify({
+                postId: postId
+            }),
+            headers: { 'Content-Type': 'application/json' },
+        })
+        .then(res => resolve(res.json()))
+    });
+}
+
+export function getVotesAmounts(postId: number){
+    return new Promise((resolve, rejects) => {
+        fetch('http://83.88.66.128:3333/post/getVotes',{ 
+            method: 'POST',
+            body:    JSON.stringify({
+                postId: postId
+            }),
+            headers: { 'Content-Type': 'application/json' },
+        })
+        .then(res => resolve(res.json()))
+    });
+}
+       
 /*
 
 TODO

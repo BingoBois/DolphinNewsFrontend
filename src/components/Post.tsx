@@ -1,15 +1,19 @@
 import * as React from 'react';
 import '../stylesheets/rowStyles.css';
+import {getCommentAmount, getVotesAmounts} from '../api/DataHandler'
+
+interface PostState {
+    votes: number,
+    comments: number
+}
 
 interface PostProps {
     title: string;
     index: number;
     url: string;
-    upvotes: number;
     id: number;
     user: string;
     time: string;
-    commentCount: number;
     postText: string;
 }
 
@@ -21,7 +25,23 @@ interface timeObject {
     days: number;
 }
 
-export default class Post extends React.Component<PostProps> {
+export default class Post extends React.Component<PostProps, PostState> {
+
+    constructor(props: PostProps){
+        super(props);
+        this.state = {
+            comments: 0,
+            votes: 0
+        }
+    }
+
+    async componentWillMount(){
+        // @ts-ignore
+        await getCommentAmount(this.props.id).then(r => this.setState({comments: r.commentAmount}));
+        // @ts-ignore
+        await getVotesAmounts(this.props.id).then(r => this.setState({votes: r.votes}));
+
+    }
 
     upvoteMargin = (xOffset: number) => {
         const element: any = this.refs[`upvotes${this.props.id}`];
@@ -96,13 +116,13 @@ export default class Post extends React.Component<PostProps> {
                     <p className="urlText">({this.extractDomain(this.props.url)})</p>
                     </div>
                 <div className="minorRow">
-                    <p className="upvotes" ref={`upvotes${this.props.id}`} style={{}}>{this.props.upvotes} points by</p>
+                    <p className="upvotes" ref={`upvotes${this.props.id}`} style={{}}>{this.state.votes === null || undefined ? 0 : this.state.votes} points by</p>
                     <p className="userText">{this.props.user}</p>
                     <p className="timeText">{this.getTime(this.formatTime(new Date().getTime() - new Date(this.props.time).getTime()))}</p>
                     <p className="rowDivider unselectable">|</p>
                     <p className="userText">hide</p>
                     <p className="rowDivider unselectable">|</p>
-                    <p className="userText">{`${this.props.commentCount} comments`}</p>
+                    <p className="userText">{`${this.state.comments} comments`}</p>
                 </div>
             </div>
         )

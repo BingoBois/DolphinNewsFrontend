@@ -4,7 +4,7 @@ import { PostObject } from 'src/types/post';
 import { CommentObject } from 'src/types/comment';
 
 
-const API_URL = "http://83.88.66.128:3333" //"80.167.223.178";
+const API_URL = "http://80.240.24.203:3000" //"80.167.223.178";
 //const LOCAL_URL = "http://localhost:3000";
 
 enum HttpRequestType {
@@ -60,7 +60,7 @@ export function register(username: string | undefined, email: string | undefined
 
 export function getPosts(index: number, amount: number){
     return new Promise((resolve, rejects) => {
-        fetch('http://83.88.66.128:3333/post/getPosts',{ 
+        fetch(API_URL+'/post/getPosts',{ 
             method: 'POST',
             body:    JSON.stringify({
                 index: index,
@@ -74,7 +74,7 @@ export function getPosts(index: number, amount: number){
 
 export function getCommentAmount(postId: number){
     return new Promise((resolve, rejects) => {
-        fetch('http://83.88.66.128:3333/post/getCommentAmount',{ 
+        fetch(API_URL+'/post/getCommentAmount',{ 
             method: 'POST',
             body:    JSON.stringify({
                 postId: postId
@@ -87,7 +87,7 @@ export function getCommentAmount(postId: number){
 
 export function getVotesAmounts(postId: number){
     return new Promise((resolve, rejects) => {
-        fetch('http://83.88.66.128:3333/post/getVotes',{ 
+        fetch(API_URL+'/post/getVotes',{ 
             method: 'POST',
             body:    JSON.stringify({
                 postId: postId

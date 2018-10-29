@@ -1,13 +1,11 @@
 # DolphinNews-Frontend:
 
-[https://github.com/BingoBois/DolphinNewsFrontend](https://github.com/BingoBois/DolphinNewsFrontend) \
+[https://github.com/BingoBois/DolphinNewsFrontend](https://github.com/BingoBois/DolphinNewsFrontend) 
 
 
 The Frontend is the visual representation of the project that the user can interact directly with and is build using React and Typescript.
 
 To run the project:
-
-
 
 *   Open a Terminal
 *   Type "npm install" 
@@ -18,6 +16,32 @@ To run the project:
     *   [https://www.typescriptlang.org/docs/handbook/compiler-options.html](https://www.typescriptlang.org/docs/handbook/compiler-options.html)
 *   Go back to the terminal and type "npm start"
 *   If no errors occurred during the "npm install" or the "tsc watch", the project should now be running
+
+----
+# The system crashed, what do i do?
+
+### 1.
+ssh root@80.240.24.203
+password !sG5[apHwB?cW%r_
+
+### 2. 
+kubectl get pods
+
+       NAME                                READY   STATUS    RESTARTS   AGE
+dolphin-backend-6c994db86b-htqm4           1/1     Running   0          26m
+
+### 3. 
+If there are any resets (use the pod name):
+kubectl logs --previous dolphin-backend-6c994db86b-htqm4
+	If no resets:
+kubectl logs dolphin-backend-6c994db86b-htqm4
+
+## Do a rollback if something is really wrong (use the name):
+
+kubectl rollout history deployment dolphin-frontend
+
+Use the revision number 1 below the current one:
+kubectl rollout undo deployment dolphin-frontend --to-revision=17
 
 ----
 # General Technologies: 
@@ -91,8 +115,6 @@ To run the project:
 ##### Datahandler.ts
 
 Functions in the Datahandler
-
-
 
 *   **login**
     *   Used for logging-in an existing user
@@ -194,6 +216,64 @@ Functions in the Datahandler
     *   Returns a promise
     *   Gets its data from the backend API at /comment/get/all
 ----
+
+# General Important Info and links:
+
+
+#### Repositories
+
+GitHub-Organization:
+
+[https://github.com/BingoBois](https://github.com/BingoBois)
+
+Project Dev-Ops
+
+[https://github.com/BingoBois/DolphinNewsDevOps](https://github.com/BingoBois/DolphinNewsDevOps)
+
+Project Frontend
+
+[https://github.com/BingoBois/DolphinNewsFrontend](https://github.com/BingoBois/DolphinNewsFrontend)
+
+Project Backend
+
+[https://github.com/BingoBois/DolphinNewsNode](https://github.com/BingoBois/DolphinNewsNode)
+
+
+## Hosting
+
+**FrontendWebSite**: [dolphin.viter.dk](dolphin.viter.dk)
+
+**Backend Database**: [http://dolphin.viter.dk:3000/](http://dolphin.viter.dk:3000/) \
+
+
+Project IP/URL
+
+**Frontend:** [http://80.240.24.203](http://80.240.24.203)
+
+**Backend:** [http://80.240.24.203:3000/](http://80.240.24.203:3000/)
+
+dbdolphin.viter.dk =[ 108.61.211.164](http://108.61.211.164/)
+
+Docker-Backend: [https://hub.docker.com/r/dolphinnews/backend/tags/](https://hub.docker.com/r/dolphinnews/backend/tags/)
+
+Docker-Frontend: [https://hub.docker.com/r/dolphinnews/frontend/tags/](https://hub.docker.com/r/dolphinnews/frontend/tags/) \
+
+
+
+## Misc Details
+
+You will need various information and files, in order to access the project's various droplets etc.
+
+Please contact us in order to get access to the teams:
+
+*   Kubernetes
+*   Droplets
+*   Docker
+*   MySQL-Database
+----
+***Original Documentation document: https://docs.google.com/document/d/1js5Vx5Y_EBHAWZZGPYC5kW4LwCBrb_e1Qx2xlP_ZxnI/edit#***
+-----
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>

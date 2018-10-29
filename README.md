@@ -1,3 +1,199 @@
+# DolphinNews-Frontend:
+
+[https://github.com/BingoBois/DolphinNewsFrontend](https://github.com/BingoBois/DolphinNewsFrontend) \
+
+
+The Frontend is the visual representation of the project that the user can interact directly with and is build using React and Typescript.
+
+To run the project:
+
+
+
+*   Open a Terminal
+*   Type "npm install" 
+    *   To install all modules and dependencies
+*   Open the "Run Task"-option
+*   Type "tsc watch"
+    *   Runs the compiler in watch mode. Watch input files and trigger recompilation on changes. The implementation of watching files and directories can be configured using environment variable. See [configuring watch](https://www.typescriptlang.org/docs/handbook/configuring-watch.html) for more details
+    *   [https://www.typescriptlang.org/docs/handbook/compiler-options.html](https://www.typescriptlang.org/docs/handbook/compiler-options.html)
+*   Go back to the terminal and type "npm start"
+*   If no errors occurred during the "npm install" or the "tsc watch", the project should now be running
+
+----
+# General Technologies: 
+
+*   Primary language:
+    *   Typescript
+        *   Developed by Microsoft
+        *   Superset of Typescript
+        *   Compiles to regular/normal Javascript
+        *   https://github.com/Microsoft/TypeScript
+*   Backend 
+    *   [http://80.240.24.203:3000/](http://80.240.24.203:3000/)
+    *   [dolphin.viter.dk](http://dolphin.viter.dk):3000/
+    *   Nodejs
+    *   Express
+    *   Port 3000
+*   Frontend
+    *   [http://80.240.24.203](http://80.240.24.203)
+    *   [dolphin.viter.dk](http://dolphin.viter.dk)
+    *   React
+    *   MobX
+    *   react-router-dom
+    *   CSS
+*   Docker 
+    *   In conjunction with Kubernetes
+*   Continuous Integration
+    *   Travis
+    *   Setup for both development and deployment
+*   Kubernetes ([https://kubernetes.io/](https://kubernetes.io/)) 
+    *   Used in conjunction with Docker
+    *   Used by Google, Financial Times, IBM and more
+    *   Run anywhere
+    *   Clusters
+        *   Private LAN
+        *   Provides IP's
+    *   Images
+        *   Frontend
+        *   Backend
+    *   Setup script for images
+        *   Download from Github
+    *   Machines: Node
+    *   Microservices
+        *   Load balance
+        *   Updating
+            *   Removes old pods and creates new
+    *   Master & Slave
+        *   Hoster "Pod" (Collection of Containers)
+            *   Rabbit MQ
+            *   Express
+    *   Pods are accessed by "Service"
+    *   Deployment manages the amount of pods and general setup/settings of the pods
+    *   Automatically checks Github for new images/new content 
+*   Digital Ocean Droplets
+    *   Hosting the servers
+    *   Protected by SSH-keys (mostly)
+*   Database
+    *   MySQL
+*   Testing
+    *   Jest
+*   Github
+*   SCRUM
+    *   Pair programming
+        *   Zoom
+        *   TeamView
+        *   Teamspeak
+*   HTTP
+    *   The team opted for using HTTP during development and deployment, due to the configuration and hoopes needed to get HTTPS up and running through free services such as "Let's Encrypt" and "xip.io". The team recognize that setting up HTTPS would be crucial and important to the projects security, if it would ever be used for Live-production.
+
+----
+# API's and Functions
+##### Datahandler.ts
+
+Functions in the Datahandler
+
+
+
+*   **login**
+    *   Used for logging-in an existing user
+    *   Post-method
+    *   Returns Promise
+    *   Content-Type set to "application/JSON"
+    *   Takes 2 Parameters
+        *   email: string
+        *   password: string
+*   **register**
+    *   Used for registering a new User 
+    *   Takes 3 parameters
+        *   username: string
+        *   email: string
+        *   password: string
+    *   Checks that none of the parameters are empty
+    *   Setups a new UserObject
+    *   Uses the "auth/register"-API found in the backend
+    *   HttpRequestType is set to Post
+    *   Data is send as stringify JSON
+*   **getPost**
+    *   Used for retrieving all post from the database, through the backend
+    *   Returns a Promise
+    *   Post-Method
+    *   Takes 2 parameters
+        *   index: number
+        *   amount: number
+    *   Content-Type set to "application/json"
+*   **getCommentAmounts**
+    *   Used for retrieving the amount of comments for a specific post
+    *   Returns a promise
+    *   Takes 1 parameter
+        *   postId: number
+    *   Post-Method
+    *   Content-Type set to "application/json"
+
+*   **getVotesAmounts**
+    *   Used for retrieving the amount of votes for a specific post
+    *   Returns a promise
+    *   Takes 1 parameter
+        *   postId: number
+    *   Post-Method
+    *   Content-Type set to "application/json"
+    
+*   **fetchData**
+    *   Custom method for retrieving data
+    *   Returns a Promise
+    *   Take 3 parameters
+        *   url:string
+        *   requestType: HttpQuestType
+        *   bodyData: string
+    *   Can be used for both POST- and GET-Request
+    *   If no bodyData, this step will be skipped
+    *   Works in conjunction with the traditional fetch-method
+    
+*   **getPostById**
+    *   Returns post with the given id
+    *   Promise to return an Array of PostObjects
+    *   Returns a Promise
+    *   Takes 1 parameter
+        *   postId: number
+    *   Gets its data from the backend API at /post/get/byid/:postId
+    
+*   **getAllPost**
+    *   Returns all post
+    *   Promise to return an Array of PostObjects
+    *   Returns a Promise
+    *   Gets its data from the backend API at /post/get/all
+    
+*   **getCommentsFromPostId**
+    *   Returns comments belonging to the given postId
+    *   Takes 1 parameter
+        *   postId: number
+    *   Promise to return an Array of PostObjects
+    *   Returns a Promise
+    *   Gets its data from the backend API at /comment/get/bypost/:postid
+    
+*   **getAllPostVotes**
+    *   Returns all posts that has votes
+    *   Promise to return an Array of PostObjects
+    *   Returns a promise
+    *   Gets its data from the backend API at /post/get/all/postwithvotes
+    
+*   **getAmountofCommentsInPost**
+    *   Returns the amount of comments in all Posts
+    *   Promise to return an Array of PostObjects
+    *   Returns a promise
+    *   Gets its data from the backend API at /post/get/all/commentamount
+    
+*   **getAllCommentsWithVote**
+    *   Returns all comments with votes
+    *   Promise to return an Array of CommentObjects
+    *   Returns a promise
+    *   Gets its data from the backend API at /comment/get/all/withvote
+    
+*   **getAllComments**
+    *   Returns all comments
+    *   Promise to return an Array of CommentObjects
+    *   Returns a promise
+    *   Gets its data from the backend API at /comment/get/all
+----
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>

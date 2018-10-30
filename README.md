@@ -270,8 +270,7 @@ Please contact us in order to get access to the teams:
 *   Docker
 *   MySQL-Database
 ----
-***Original Documentation document: https://docs.google.com/document/d/1js5Vx5Y_EBHAWZZGPYC5kW4LwCBrb_e1Qx2xlP_ZxnI/edit#***
------
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 

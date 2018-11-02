@@ -5,7 +5,7 @@ import { CommentObject } from 'src/types/comment';
 
 
 const API_URL = "http://80.240.24.203:3000" //"80.167.223.178";
-//const LOCAL_URL = "http://localhost:3000";
+//onst API_URL = "http://localhost:3000";
 
 enum HttpRequestType {
     Get,

@@ -19,6 +19,7 @@ export default class Comment extends React.Component<RealComment,any>{
               <p className="userText">{this.props.username}</p>
               <p className="timeText">{this.props.time}</p>
               <p className="rowDivider unselectable">|</p>
+              
           </div>
       </div>
     );

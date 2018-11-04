@@ -25,7 +25,7 @@ class App extends React.Component {
                     <Route exact path="/register" component={Register} />
                     <Route exact path="/resetPassword" component={ResetPassword} />
                     <Route path="/post" component={PostScreen} />
-                    <Route path="/newpost" component={NewTopicScreen}/>
+                    <Route path="/newtopic" component={NewTopicScreen}/>
                 </div>
             </Router>
         )

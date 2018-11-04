@@ -97,6 +97,59 @@ export function getVotesAmounts(postId: number){
         .then(res => resolve(res.json()))
     });
 }
+
+export function getLatest(){
+    return new Promise((resolve, rejects) => {
+        fetch(API_URL+'/latest',{ 
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        })
+        .then(res => resolve(res.json()))
+    });
+}
+
+//Function for posting a new Topic/Story
+export function postNewTopic(username: string, pwdHash: string,postTitle: string, postURL: string, postText: string, hanesst_id: number){
+    return new Promise((resolve, rejects) => {
+        fetch(API_URL+'/post/',{ 
+            method: 'POST',
+            body:    JSON.stringify({
+                username: username, 
+                post_type: 'story', 
+                pwd_hash: pwdHash, 
+                post_title: postTitle,
+                post_url: postURL, 
+                post_parent: -1, 
+                hanesst_id: hanesst_id, 
+                post_text: postText
+            }),
+            headers: { 'Content-Type': 'application/json' },
+        })
+        .then(res => resolve(res.json()))
+    });
+    
+}
+
+export function postNewComment(username: string, pwdHash: string, postText: string, postParent: number, hanesst_id: number){
+    return new Promise((resolve, rejects) => {
+        fetch(API_URL+'/post/',{ 
+            method: 'POST',
+            body:    JSON.stringify({
+                username: username, 
+                post_type: 'comment', 
+                pwd_hash: pwdHash, 
+                post_title: "",
+                post_url: "", 
+                post_parent: postParent, 
+                hanesst_id: hanesst_id, 
+                post_text: postText
+            }),
+            headers: { 'Content-Type': 'application/json' },
+        })
+        .then(res => resolve(res.json()))
+    });
+    
+}
        
 /*
 

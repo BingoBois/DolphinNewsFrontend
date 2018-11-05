@@ -5,7 +5,7 @@ import { CommentObject } from 'src/types/comment';
 
 
 const API_URL = "http://80.240.24.203:3000" //"80.167.223.178";
-//onst API_URL = "http://localhost:3000";
+//const API_URL = "http://localhost:3000";
 
 enum HttpRequestType {
     Get,
@@ -131,7 +131,7 @@ export function postNewTopic(username: string, pwdHash: string,postTitle: string
 }
 
 //Function for Posting a new comment to a topic/post
-export function postNewComment(username: string, pwdHash: string, postText: string, postParentId: number, hanesst_id: number){
+export function postNewComment(username: string, pwdHash: string, postText: string, postParentId_hanesst_id: number, hanesst_id: number){
     return new Promise((resolve, rejects) => {
         fetch(API_URL+'/post/',{ 
             method: 'POST',
@@ -141,7 +141,7 @@ export function postNewComment(username: string, pwdHash: string, postText: stri
                 pwd_hash: pwdHash, 
                 post_title: "",
                 post_url: "", 
-                post_parent: postParentId, 
+                post_parent: postParentId_hanesst_id, 
                 hanesst_id: hanesst_id, 
                 post_text: postText
             }),

@@ -4,5 +4,6 @@ export interface RealComment{
   time: string,
   fk_user: string,
   username: string,
-  id: number
+  id: number,
+  hanesst_id: number
 }

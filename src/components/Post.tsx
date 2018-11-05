@@ -16,6 +16,7 @@ interface PostProps {
     user: string;
     time: string;
     postText: string;
+    hanesst_id: number
 }
 
 interface timeObject {

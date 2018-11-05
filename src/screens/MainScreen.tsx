@@ -44,6 +44,7 @@ class MainScreen extends React.Component<any, mainScreenState> {
                 url = {data.post_url}
                 time= {data.time}
                 postText = {data.post_text}
+                hanesst_id = {data.hanesst_id}
                 />
             )
         })

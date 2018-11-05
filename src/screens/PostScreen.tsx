@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Comment from '../components/Comment';
-import { getCommetsFromPostId, getPostById, postNewComment } from '../api/DataHandler';
+import { getCommetsFromPostId, getPostById, postNewComment} from '../api/DataHandler';
 import { RealComment } from 'src/types/realcomment';
 
 interface PostState {
@@ -13,6 +13,7 @@ interface PostState {
   username: string
   pwdHash: string
   comment_hanesst_id: number
+  post_hanesst_id: number
 }
 
 export default class PostScreen extends React.Component<any, PostState>{
@@ -27,7 +28,8 @@ export default class PostScreen extends React.Component<any, PostState>{
     post_text: "",
     username: "",
     pwdHash: "",
-    comment_hanesst_id: 0
+    comment_hanesst_id: 0,
+    post_hanesst_id: 0
   }
 
  
@@ -74,36 +76,27 @@ handleCommentInput(event:React.FormEvent<HTMLInputElement>){
       getCommetsFromPostId(this.state.postId).then((data) => {
         //@ts-ignore
         this.setState({comments : data});
-        console.log(this.state.comments)
+        //@ts-ignore
+        this.setState({post_hanesst_id: data[0].hanesst_id})
+        console.log(data[0].hanesst_id)
       }); 
+    
     }
+   
   }
 
 
 
   handleSubmit = async ( e: React.FormEvent<HTMLFormElement>):Promise<void> => {
       e.preventDefault();
-      console.log("commentText "+this.state.post_text)
-      console.log("hanID "+this.state.comment_hanesst_id)
-      console.log("postID "+this.state.postId)
-      console.log("pwd "+this.state.pwdHash)
-      console.log("username "+this.state.username)
 
-      /*This works!
-      Need to change a small thing in the backend, so that the "GetPost" also returns the posts hanesst_id, 
-      since this is the ID we need in order to attach new comments too!
-      */
-      postNewComment("Christian", "Olsen", "DIABLO IMMORTAL WILL SUCK!!!", 1, 666).then(res => {
-        console.log(res);
-        });
-
-      if(this.state.username|| this.state.pwdHash || this.state.post_text || this.state.postId || this.state.comment_hanesst_id){
+      if(this.state.username|| this.state.pwdHash || this.state.post_text || this.state.postId || this.state.post_hanesst_id){
          //@ts-ignore
-      /*postNewComment(this.state.username, this.state.pwdHash, this.state.newComment, this.state.postId, this.state.hanesst_id).then(res => {
+      postNewComment(this.state.username, this.state.pwdHash, this.state.post_text, this.state.post_hanesst_id, this.state.comment_hanesst_id ).then(res => {
         console.log(res);
         });
-        */
-        alert("Your comment was successfully posted!");
+        
+        alert("Your comment was successfully posted! Please refresh the page to see it!");
       } else {
         alert("Something went wrong! Did you fill out all the inputs?");
       }
@@ -111,6 +104,7 @@ handleCommentInput(event:React.FormEvent<HTMLInputElement>){
   }
 
   newComment(){
+    
     return(
       <div>
       <h2>New Comment</h2>
@@ -164,7 +158,7 @@ handleCommentInput(event:React.FormEvent<HTMLInputElement>){
 
   render(){
     const comments = this.state.comments.map((comment: RealComment) => {
-      return(<Comment key={comment.id} content={comment.content} karma={comment.karma} time={comment.time} fk_user={comment.fk_user} username={comment.username} id={comment.id}/>);
+      return(<Comment key={comment.id} content={comment.content} karma={comment.karma} time={comment.time} fk_user={comment.fk_user} username={comment.username} id={comment.id}  hanesst_id={comment.hanesst_id}/>);
     });
 
    

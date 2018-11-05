@@ -130,7 +130,8 @@ export function postNewTopic(username: string, pwdHash: string,postTitle: string
     
 }
 
-export function postNewComment(username: string, pwdHash: string, postText: string, postParent: number, hanesst_id: number){
+//Function for Posting a new comment to a topic/post
+export function postNewComment(username: string, pwdHash: string, postText: string, postParentId: number, hanesst_id: number){
     return new Promise((resolve, rejects) => {
         fetch(API_URL+'/post/',{ 
             method: 'POST',
@@ -140,7 +141,7 @@ export function postNewComment(username: string, pwdHash: string, postText: stri
                 pwd_hash: pwdHash, 
                 post_title: "",
                 post_url: "", 
-                post_parent: postParent, 
+                post_parent: postParentId, 
                 hanesst_id: hanesst_id, 
                 post_text: postText
             }),

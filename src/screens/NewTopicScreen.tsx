@@ -62,18 +62,20 @@ handleNewTopicSubmit = async ( e: React.FormEvent<HTMLFormElement>):Promise<void
             postNewTopic(this.state.username,this.state.pwdHash,this.state.post_title, this.state.post_url, this.state.post_text, this.state.hanesst_id).then(res => {
                 console.log(res);
             });
+            alert("Your story was successfully posted!");
         }
     }
 
-public render(){
-    return(
-        <div>
-            <h1>Welcome to the new Topic Screen!</h1>
+    newTopic(){
+        return(
+            <div>
 
-                
+                <h1>Welcome to the new Topic Screen!</h1>
+
+                                
                 <form  onSubmit={this.handleNewTopicSubmit}>
                 <label htmlFor="test" >
-                
+
                 <h2>Topic/Post Information</h2>   
                 <h4>New Topic Title</h4>
                     <input  
@@ -83,7 +85,7 @@ public render(){
                     className="name" 
                     onChange={e => this.handlePostTitleInput(e)} />
                     <br/>
-                
+
                 <h4>Topic URL</h4>
                     <input 
                     type="text"
@@ -129,11 +131,20 @@ public render(){
                     
                     onChange={e => this.handlePWDInput(e)} />
                     <br/>
-            
+
                 <input type="submit" 
                 disabled={!this.state.username || !this.state.pwdHash || !this.state.post_title || !this.state.post_url || !this.state.post_text} 
                 value="Create New Topic"/>
                 </form>
+
+            </div>
+        )
+    }
+
+public render(){
+    return(
+        <div>
+            {this.newTopic()}
 
         </div>
         )

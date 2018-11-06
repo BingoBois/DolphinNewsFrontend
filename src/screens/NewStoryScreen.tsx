@@ -1,25 +1,24 @@
 import * as React from 'react';
-import { postNewTopic}from '../api/DataHandler';
+import { postNewStoryNonHelge}from '../api/DataHandler';
+
 
 //import { Link } from 'react-router-dom'
 
 interface NewTopicState{
-    post_title: string,
-    post_text: string,
-    post_url: string,
-    username: string,
-    pwdHash: string,
-    hanesst_id: number,
+    post_title: string | undefined,
+    post_text: string | undefined,
+    post_url: string | undefined,
+    username: string | undefined,
+    password: string | undefined
 }
 class NewTopicScreen extends React.Component<any, NewTopicState> {
 
 state = {
-    post_title: "",
-    post_text: "",
-    post_url: "",
-    username: "",
-    pwdHash: "",
-    hanesst_id: 0
+    post_title: undefined,
+    post_text: undefined,
+    post_url: undefined,
+    username: undefined,
+    password: undefined
 }
 
     
@@ -40,33 +39,34 @@ handleUserNameInput(event:React.FormEvent<HTMLInputElement>){
 }
 
 handlePWDInput(event:React.FormEvent<HTMLInputElement>){
-    this.setState({pwdHash: event.currentTarget.value})
+    this.setState({password: event.currentTarget.value})
 }
 
-handleHasesstIdInput(event:React.FormEvent<HTMLInputElement>){
-    this.setState({hanesst_id: event.currentTarget.valueAsNumber})
-}
 
 
   
 handleNewTopicSubmit = async ( e: React.FormEvent<HTMLFormElement>):Promise<void> => {
         e.preventDefault();
-        if(this.state.hanesst_id <= 0  ){
-            alert("hanesst id can't be equal to or below 0!")
-        } else if(!this.state.username || this.state.username.length <= 3){
+        //@ts-ignore
+        if(!this.state.username || this.state.username.length <= 3){
             alert("Username must be at least 3 chars long")
-        } else if(!this.state.pwdHash || this.state.pwdHash.length <= 3){
+            //@ts-ignore
+        } else if(!this.state.password || this.state.password.length <= 3){
             alert("Password must be at least 3 chars long")
         } 
         else {
-            postNewTopic(this.state.username,this.state.pwdHash,this.state.post_title, this.state.post_url, this.state.post_text, this.state.hanesst_id).then(res => {
+            //@ts-ignore
+            postNewStoryNonHelge(this.state.username,this.state.password,this.state.post_title, this.state.post_url, this.state.post_text).then(res => {
                 console.log(res);
-            });
-            alert("Your story was successfully posted!");
+                alert("Your story was successfully posted!");
+            }).catch((err:any) => 
+            alert(`${err}`))
         }
     }
 
-    newTopic(){
+ 
+
+    newStory(){
         return(
             <div>
 
@@ -76,64 +76,68 @@ handleNewTopicSubmit = async ( e: React.FormEvent<HTMLFormElement>):Promise<void
                 <form  onSubmit={this.handleNewTopicSubmit}>
                 <label htmlFor="test" >
 
+                
                 <h2>Topic/Post Information</h2>   
                 <h4>New Topic Title</h4>
+                <p>
                     <input  
                     type="text"
                     style={{width:"75%", height: "25px", lineHeight:"1.5em", marginBottom:"20px", display: "inline-block"}} 
                     value={this.state.post_title} 
                     className="name" 
                     onChange={e => this.handlePostTitleInput(e)} />
-                    <br/>
+                    
+                </p>
 
+                
                 <h4>Topic URL</h4>
+                <p>
                     <input 
                     type="text"
                     style={{width:"75%", height: "25px", lineHeight:"1.5em", marginBottom:"20px", display: "inline-block"}} 
                     value={this.state.post_url}
                     onChange={e => this.handlePostUrlInput(e)}
                     />
+                </p>
 
+                
                 <h4>Topic Text</h4>
+                <p>
                     <input 
                     type="text"
                     style={{width:"75%", height: "25px", lineHeight:"1.5em", marginBottom:"20px", display: "inline-block"}} 
                     value={this.state.post_text}
                     onChange={e => this.handlePostTextInput(e)}
                     />
+                </p>
                 </label>
-                <br/>
 
-                <h4>Hanesst ID</h4>
-                    <input  
-                    type="number"
-                    style={{width:"75%", height: "25px", lineHeight:"1.5em", marginBottom:"20px", display: "inline-block"}} 
-                    value={this.state.hanesst_id} 
-                    
-                    onChange={e => this.handleHasesstIdInput(e)} />
-                    <br/>   
-
+                
+                
                 <h2>User Info</h2>
                 <h4>Username</h4>
+                <p>
                     <input  
                     type="text"
                     style={{width:"75%", height: "25px", lineHeight:"1.5em", marginBottom:"20px", display: "inline-block"}} 
                     value={this.state.username} 
                     
                     onChange={e => this.handleUserNameInput(e)} />
-                    <br/>
+                </p>
 
+                
                 <h4>Password</h4>
+                <p>
                     <input  
-                    type="text"
+                    type="password"
                     style={{width:"75%", height: "25px", lineHeight:"1.5em", marginBottom:"20px", display: "inline-block"}} 
-                    value={this.state.pwdHash} 
+                    value={this.state.password} 
                     
                     onChange={e => this.handlePWDInput(e)} />
-                    <br/>
+                </p>
 
                 <input type="submit" 
-                disabled={!this.state.username || !this.state.pwdHash || !this.state.post_title || !this.state.post_url || !this.state.post_text} 
+               disabled={!this.state.username || !this.state.password || !this.state.post_title || !this.state.post_url || !this.state.post_text} 
                 value="Create New Topic"/>
                 </form>
 
@@ -144,7 +148,7 @@ handleNewTopicSubmit = async ( e: React.FormEvent<HTMLFormElement>):Promise<void
 public render(){
     return(
         <div>
-            {this.newTopic()}
+            {this.newStory()}
 
         </div>
         )

@@ -4,8 +4,8 @@ import { PostObject } from 'src/types/post';
 import { CommentObject } from 'src/types/comment';
 
 
-const API_URL = "http://80.240.24.203:3000" //"80.167.223.178";
-//const API_URL = "http://localhost:3000";
+//const API_URL = "http://80.240.24.203:3000" //"80.167.223.178";
+const API_URL = "http://localhost:3000";
 
 enum HttpRequestType {
     Get,
@@ -98,25 +98,17 @@ export function getVotesAmounts(postId: number){
     });
 }
 
-export function getLatest(){
-    return new Promise((resolve, rejects) => {
-        fetch(API_URL+'/latest',{ 
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-        })
-        .then(res => resolve(res.json()))
-    });
-}
 
 //Function for posting a new Topic/Story
-export function postNewTopic(username: string, pwdHash: string,postTitle: string, postURL: string, postText: string, hanesst_id: number){
+//Currently NOT BEING USED due to it requiring a hanesst_id/helge_id
+export function postNewTopic(username: string, password: string,postTitle: string, postURL: string, postText: string, hanesst_id: number){
     return new Promise((resolve, rejects) => {
         fetch(API_URL+'/post/',{ 
             method: 'POST',
             body:    JSON.stringify({
                 username: username, 
                 post_type: 'story', 
-                pwd_hash: pwdHash, 
+                pwd_hash: password, 
                 post_title: postTitle,
                 post_url: postURL, 
                 post_parent: -1, 
@@ -131,19 +123,66 @@ export function postNewTopic(username: string, pwdHash: string,postTitle: string
 }
 
 //Function for Posting a new comment to a topic/post
-export function postNewComment(username: string, pwdHash: string, postText: string, postParentId_hanesst_id: number, hanesst_id: number){
+//Currently NOT BEING USED due to it requiring a hanesst_id/helge_id
+export function postNewComment(username: string, password: string, postText: string, postParentId_hanesst_id: number, hanesst_id: number){
     return new Promise((resolve, rejects) => {
         fetch(API_URL+'/post/',{ 
             method: 'POST',
             body:    JSON.stringify({
                 username: username, 
                 post_type: 'comment', 
-                pwd_hash: pwdHash, 
+                pwd_hash: password, 
                 post_title: "",
                 post_url: "", 
                 post_parent: postParentId_hanesst_id, 
                 hanesst_id: hanesst_id, 
                 post_text: postText
+            }),
+            headers: { 'Content-Type': 'application/json' },
+        })
+        .then(res => resolve(res.json()))
+    });
+    
+}
+
+//Primary Method used in the Frontend
+//Method for posting a new Story/Topic, with a hanesst_id/helge_id of 0
+export function postNewStoryNonHelge(username: string, password: string, postTitle: string, postURL: string, postText: string){
+    return new Promise((resolve, rejects) => {
+        fetch(API_URL+'/post/nonhelge',{ 
+            method: 'POST',
+            body:    JSON.stringify({
+                username: username, 
+                post_type: 'story', 
+                pwd_hash: password, 
+                post_title: postTitle,
+                post_url: postURL, 
+                post_parent: -1, 
+                post_text: postText,
+                hanesst_id: 0
+            }),
+            headers: { 'Content-Type': 'application/json' },
+        })
+        .then(res => resolve(res.json()))
+    });
+    
+}
+
+//Primary Method used in the Frontend
+//Method for posting a comment on a Story/Topic, with a hanesst_id/helge_id of 0
+export function postNewCommentNonHelge(username: string, password: string, postText: string, parentPostid: number){
+    return new Promise((resolve, rejects) => {
+        fetch(API_URL+'/post/nonhelge',{ 
+            method: 'POST',
+            body:    JSON.stringify({
+                username: username, 
+                post_type: 'comment', 
+                pwd_hash: password, 
+                post_title: "",
+                post_url: "", 
+                post_parent: parentPostid, 
+                post_text: postText,
+                hanesst_id: 0
             }),
             headers: { 'Content-Type': 'application/json' },
         })

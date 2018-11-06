@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Comment from '../components/Comment';
-import { getCommetsFromPostId, getPostById, postNewComment} from '../api/DataHandler';
+import { getCommetsFromPostId, getPostById, postNewCommentNonHelge} from '../api/DataHandler';
 import { RealComment } from 'src/types/realcomment';
 
 interface PostState {
@@ -9,11 +9,9 @@ interface PostState {
   postUrl: string | undefined,
   postKarma: number | undefined,
   comments: Array<RealComment> | undefined
-  post_text: string
-  username: string
-  pwdHash: string
-  comment_hanesst_id: number
-  post_hanesst_id: number
+  post_text: string | undefined
+  username: string | undefined
+  password: string | undefined
 }
 
 export default class PostScreen extends React.Component<any, PostState>{
@@ -25,11 +23,10 @@ export default class PostScreen extends React.Component<any, PostState>{
     postUrl: undefined,
     postKarma: undefined,
     comments: [],
-    post_text: "",
-    username: "",
-    pwdHash: "",
-    comment_hanesst_id: 0,
-    post_hanesst_id: 0
+    post_text: undefined,
+    username: undefined,
+    password: undefined,
+
   }
 
  
@@ -48,12 +45,9 @@ handleUserNameInput(event:React.FormEvent<HTMLInputElement>){
 }
 
 handlePWDInput(event:React.FormEvent<HTMLInputElement>){
-    this.setState({pwdHash: event.currentTarget.value})
+    this.setState({password: event.currentTarget.value})
 }
 
-handleHasesstIdInput(event:React.FormEvent<HTMLInputElement>){
-    this.setState({comment_hanesst_id: event.currentTarget.valueAsNumber})
-}
 
 handleCommentInput(event:React.FormEvent<HTMLInputElement>){  
   this.setState({post_text: event.currentTarget.value})
@@ -90,13 +84,15 @@ handleCommentInput(event:React.FormEvent<HTMLInputElement>){
   handleSubmit = async ( e: React.FormEvent<HTMLFormElement>):Promise<void> => {
       e.preventDefault();
 
-      if(this.state.username|| this.state.pwdHash || this.state.post_text || this.state.postId || this.state.post_hanesst_id){
+      if(this.state.username|| this.state.password || this.state.post_text || this.state.postId){
          //@ts-ignore
-      postNewComment(this.state.username, this.state.pwdHash, this.state.post_text, this.state.post_hanesst_id, this.state.comment_hanesst_id ).then(res => {
+      postNewCommentNonHelge(this.state.username, this.state.password, this.state.post_text, this.state.postId).then(res => {
         console.log(res);
-        });
-        
         alert("Your comment was successfully posted! Please refresh the page to see it!");
+        }).catch((err:any) => 
+        alert(`${err}`));
+        
+       
       } else {
         alert("Something went wrong! Did you fill out all the inputs?");
       }
@@ -117,12 +113,6 @@ handleCommentInput(event:React.FormEvent<HTMLInputElement>){
            value={this.state.post_text}
            onChange={e => this.handleCommentInput(e)} />
 
-          <h4>Hanesst ID</h4>
-          <input  
-           type="number"
-           style={{width:"75%", height: "25px", lineHeight:"1.5em", marginBottom:"20px", display: "inline-block"}} 
-           value={this.state.comment_hanesst_id}
-           onChange={e => this.handleHasesstIdInput(e)} />
 
         <h2>User Information</h2>
         <h4>User Name</h4>
@@ -134,19 +124,16 @@ handleCommentInput(event:React.FormEvent<HTMLInputElement>){
 
         <h4>Password</h4>
          <input  
-           type="text"
+           type="Password"
            style={{width:"75%", height: "25px", lineHeight:"1.5em", marginBottom:"20px", display: "inline-block"}} 
-           value={this.state.pwdHash} 
+           value={this.state.password} 
            onChange={e => this.handlePWDInput(e)} />
          </label>
          <br/>
 
-         
-
-
          <input type="submit" 
          value="Submit Comment" 
-         //disabled={!this.state.username|| !this.state.pwdHash || !this.state.newComment || !this.state.postId || !this.state.hanesst_id}
+         disabled={!this.state.username|| !this.state.password || !this.state.post_text|| !this.state.postId }
          />
       </form>
 
@@ -158,7 +145,7 @@ handleCommentInput(event:React.FormEvent<HTMLInputElement>){
 
   render(){
     const comments = this.state.comments.map((comment: RealComment) => {
-      return(<Comment key={comment.id} content={comment.content} karma={comment.karma} time={comment.time} fk_user={comment.fk_user} username={comment.username} id={comment.id}  hanesst_id={comment.hanesst_id}/>);
+      return(<Comment key={comment.id} content={comment.content} karma={comment.karma} time={comment.time} fk_user={comment.fk_user} username={comment.username} id={comment.id}/>);
     });
 
    

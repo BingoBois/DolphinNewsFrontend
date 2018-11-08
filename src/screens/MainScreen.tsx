@@ -66,7 +66,7 @@ class MainScreen extends React.Component<any, mainScreenState> {
                 {tableData}
                 <br/>
                 {commentTableTest}
-                <h2 style={{marginBottom: 40}} onClick={() => {
+                <h2 style={{marginBottom: 40, cursor: 'pointer'}} onClick={() => {
                     store.updatePosts()
                 }}>More</h2>
 

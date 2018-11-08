@@ -4,8 +4,7 @@ import { PostObject } from 'src/types/post';
 import { CommentObject } from 'src/types/comment';
 
 
-const API_URL = "http://80.240.24.203:3000" //"80.167.223.178";
-//const API_URL = "http://localhost:3000";
+const API_URL = "http://dolphin.viter.dk:3000";
 
 enum HttpRequestType {
     Get,

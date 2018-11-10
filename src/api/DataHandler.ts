@@ -13,7 +13,7 @@ enum HttpRequestType {
 
 export function login(email: string, password: string){
     return new Promise((resolve, rejects) => {
-        fetch(API_URL, {
+        fetch(API_URL + "/auth/login", {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

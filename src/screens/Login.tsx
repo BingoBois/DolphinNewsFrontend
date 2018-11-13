@@ -38,7 +38,10 @@ class Login extends React.Component<any, any> {
                     <div className="login-form">
                         <input type="text" name="username" placeholder="username" onChange={this.handleChange} />
                         <input type="password" name="password" placeholder="password" onChange={this.handleChange} />
-                        <button onClick={() => Store.loginUser(this.state.username, this.state.password)}>login</button>
+                        <button onClick={() => {
+                            Store.loginUser(this.state.username, this.state.password)
+                            this.props.history.push("/")
+                        }}>Login</button>
                         <p className="message textContainer"> Not Registered? <Link to="/register">Create an account!</Link></p>
                         <p className="message textMargin">Forgot Password? <Link to="/resetPassword">Reset Password</Link></p>
 

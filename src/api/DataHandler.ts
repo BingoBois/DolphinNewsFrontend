@@ -20,10 +20,10 @@ export function login(email: string, password: string){
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                email: email,
+                username: email,
                 password: password
             }),
-        }).then(response => resolve(response)).catch(err => rejects(err));
+        }).then(response => response.json()).then(response => resolve(response)).catch(err => rejects(err));
     });
 }
 

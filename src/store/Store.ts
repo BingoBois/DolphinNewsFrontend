@@ -1,6 +1,7 @@
 import { observable, action } from 'mobx';
 import {PostObject} from '../types/post'
-import { getPosts } from 'src/api/DataHandler';
+import { getPosts, login } from 'src/api/DataHandler';
+import UserObject from 'src/types/user';
 
 class Store {
     
@@ -8,6 +9,7 @@ class Store {
     @observable posts: Array<PostObject> = [];
     @observable index: number = 0;
     @observable amount: number = 20;
+    @observable user: UserObject = {id: 0, username: "", password: "", email: "", karma: 0, role: "member"};
 
     @action
     updatePosts(){
@@ -23,6 +25,12 @@ class Store {
         }).catch(e => console.log(e))
     }
 
+    @action
+    loginUser(username: string, password: string) {
+        login(username, password)
+        .then((response: UserObject) => store.user = response)
+        .catch(e => console.log(e))
+    }
 
 }
 

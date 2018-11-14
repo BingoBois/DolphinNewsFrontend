@@ -59,13 +59,11 @@ export default class Post extends React.Component<PostProps, PostState> {
             if (!e.target.classList.contains("clickedArrow")) {
                 e.target.classList.remove("upvoteArrow");
                 e.target.classList.add("clickedArrow");
-                console.log(userId, postId)
                 // @ts-ignore
                 votePost(userId, postId);
             } else {
                 e.target.classList.remove("clickedArrow");
                 e.target.classList.add("upvoteArrow");
-                console.log("unvoting..")
                 // @ts-ignore
                 unvotePost(userId, postId);
             }

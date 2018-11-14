@@ -324,7 +324,7 @@ export function unvotePost(userId: number, postId: number) {
     });
 }
 
-export function voteComemnt(userId: number, commentId: number) {
+export function voteComment(userId: number, commentId: number) {
     return new Promise((resolve, rejects) => {
         fetch(API_URL + "/comment/vote", {
             method: 'POST',

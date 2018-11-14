@@ -312,9 +312,9 @@ export function votePost(userId: number, postId: number) {
     });
 }
 
-export function unvotePost(postId: number) {
+export function unvotePost(userId: number, postId: number) {
     return new Promise((resolve, rejects) => {
-        fetch(API_URL + "/post/unvote/id/" + postId, {
+        fetch(API_URL + "/post/unvote/userId/" + userId + "/postId/" + postId, {
             method: 'DELETE',
             headers: {
                 Accept: 'application/json',
@@ -340,9 +340,9 @@ export function voteComemnt(userId: number, commentId: number) {
     });
 }
 
-export function unvoteComment(commentId: number) {
+export function unvoteComment(userId: number, commentId: number) {
     return new Promise((resolve, rejects) => {
-        fetch(API_URL + "/comment/unvote/id/" + commentId, {
+        fetch(API_URL + "/comment/unvote/userId/" + userId + "/commentId/" + commentId, {
             method: 'DELETE',
             headers: {
                 Accept: 'application/json',

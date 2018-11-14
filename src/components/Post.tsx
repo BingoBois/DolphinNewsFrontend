@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { Link }  from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../stylesheets/rowStyles.css';
-import {getCommentAmount, getVotesAmounts} from '../api/DataHandler'
+import { getCommentAmount, getVotesAmounts, votePost, unvotePost } from '../api/DataHandler'
+import Store from '../store/Store'
 
 interface PostState {
     votes: number,
@@ -28,7 +29,7 @@ interface timeObject {
 
 export default class Post extends React.Component<PostProps, PostState> {
 
-    constructor(props: PostProps){
+    constructor(props: PostProps) {
         super(props);
         this.state = {
             comments: 0,
@@ -36,11 +37,11 @@ export default class Post extends React.Component<PostProps, PostState> {
         }
     }
 
-    async componentWillMount(){
+    async componentWillMount() {
         // @ts-ignore
-        await getCommentAmount(this.props.id).then(r => this.setState({comments: r.commentAmount}));
+        await getCommentAmount(this.props.id).then(r => this.setState({ comments: r.commentAmount }));
         // @ts-ignore
-        await getVotesAmounts(this.props.id).then(r => this.setState({votes: r.votes}));
+        await getVotesAmounts(this.props.id).then(r => this.setState({ votes: r.votes }));
 
     }
 
@@ -50,12 +51,22 @@ export default class Post extends React.Component<PostProps, PostState> {
     }
 
     upvote = (e: any) => {
-        if (!e.target.classList.contains("clickedArrow")) {
-            e.target.classList.remove("upvoteArrow");
-            e.target.classList.add("clickedArrow");
+        if (Store.user.username === "") {
+            alert("You have to login to upvote posts!")
         } else {
-            e.target.classList.remove("clickedArrow");
-            e.target.classList.add("upvoteArrow");
+            const userId = Store.user.id;
+            const postId = this.props.id;
+            if (!e.target.classList.contains("clickedArrow")) {
+                e.target.classList.remove("upvoteArrow");
+                e.target.classList.add("clickedArrow");
+                // @ts-ignore
+                votePost(userId, postId);
+            } else {
+                e.target.classList.remove("clickedArrow");
+                e.target.classList.add("upvoteArrow");
+                // @ts-ignore
+                unvotePost(userId, postId);
+            }
         }
     }
 
@@ -75,13 +86,13 @@ export default class Post extends React.Component<PostProps, PostState> {
     formatTime = (milliseconds: number): timeObject => {
         let seconds = Math.floor(milliseconds / 1000);
         milliseconds -= (seconds * 1000);
-        
+
         let minutes = Math.floor(seconds / 60);
         seconds -= (minutes * 60);
 
         let hours = Math.floor(minutes / 60);
         minutes -= (hours * 60);
-        
+
         let days = Math.floor(hours / 24);
         hours -= (days * 24);
 
@@ -112,10 +123,10 @@ export default class Post extends React.Component<PostProps, PostState> {
             <div className="dataRow">
                 <div className="mainRow">
                     <p className="rowNumber" ref={`rowNumber${this.props.id}`}>{this.props.index}.</p>
-                    <img className="upvoteArrow" src={require('../assets/green_arrow.png')} onClick={(e) => this.upvote(e)}/>
+                    <img className="upvoteArrow" src={require('../assets/green_arrow.png')} onClick={(e) => this.upvote(e)} />
                     <p className="rowText" ref={`rowText${this.props.id}`}>{this.props.title}</p>
                     <p className="urlText">({this.extractDomain(this.props.url)})</p>
-                    </div>
+                </div>
                 <div className="minorRow">
                     <p className="upvotes" ref={`upvotes${this.props.id}`} style={{}}>{this.state.votes === null || undefined ? 0 : this.state.votes} points by</p>
                     <p className="userText">{this.props.user}</p>

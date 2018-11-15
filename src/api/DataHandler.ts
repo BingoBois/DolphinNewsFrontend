@@ -13,17 +13,17 @@ enum HttpRequestType {
 
 export function login(email: string, password: string){
     return new Promise((resolve, rejects) => {
-        fetch(API_URL, {
+        fetch(API_URL + "/auth/login", {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                email: email,
+                username: email,
                 password: password
             }),
-        }).then(response => resolve(response)).catch(err => rejects(err));
+        }).then(response => response.json()).then(response => resolve(response)).catch(err => rejects(err));
     });
 }
 
@@ -296,7 +296,61 @@ export function getAllComments(): Promise<Array<CommentObject>>{
     });
 }
 
+export function votePost(userId: number, postId: number) {
+    return new Promise((resolve, rejects) => {
+        fetch(API_URL + "/post/vote", {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                fk_user: userId,
+                fk_post: postId
+            }),
+        }).then(response => resolve(response)).catch(err => rejects(err));
+    });
+}
 
+export function unvotePost(userId: number, postId: number) {
+    return new Promise((resolve, rejects) => {
+        fetch(API_URL + "/post/unvote/userId/" + userId + "/postId/" + postId, {
+            method: 'DELETE',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            }
+        }).then(response => resolve(response)).catch(err => rejects(err));
+    });
+}
+
+export function voteComment(userId: number, commentId: number) {
+    return new Promise((resolve, rejects) => {
+        fetch(API_URL + "/comment/vote", {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                fk_user: userId,
+                fk_comment: commentId
+            }),
+        }).then(response => resolve(response)).catch(err => rejects(err));
+    });
+}
+
+export function unvoteComment(userId: number, commentId: number) {
+    return new Promise((resolve, rejects) => {
+        fetch(API_URL + "/comment/unvote/userId/" + userId + "/commentId/" + commentId, {
+            method: 'DELETE',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            }
+        }).then(response => resolve(response)).catch(err => rejects(err));
+    });
+}
 
 
 /*

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import '../stylesheets/rowStyles.css';
-import { getCommentAmount, getVotesAmounts, votePost, unvotePost, getAllVotedPostIdsByUserId } from '../api/DataHandler'
+import { getCommentAmount, getVotesAmounts, votePost, unvotePost } from '../api/DataHandler'
 import Store from '../store/Store'
 import { observer } from 'mobx-react';
 
@@ -44,10 +44,7 @@ export default class Post extends React.Component<PostProps, PostState> {
         await getCommentAmount(this.props.id).then(r => this.setState({ comments: r.commentAmount }));
         // @ts-ignore
         await getVotesAmounts(this.props.id).then(r => this.setState({ votes: r.votes }));
-        if (Store.user && Store.user.id) {
-            // @ts-ignore
-            await getAllVotedPostIdsByUserId(Store.user.id).then(postIds => Store.user.votedPostIds = postIds)
-        }
+        await Store.getAllVotedPostIdsByUser();
     }
 
     upvoteMargin = (xOffset: number) => {

@@ -18,9 +18,13 @@ class Login extends React.Component<any, userInfo> {
     }
 
     login() {
-        //@ts-ignore
-        Store.loginUser(this.state.username, this.state.password)
-        this.props.history.push("/")
+        if (this.state.username === undefined || this.state.password === undefined || this.state.username === "" || this.state.password === "") {
+            alert("Please enter an username and a password!")
+        } else {
+            //@ts-ignore
+            Store.loginUser(this.state.username, this.state.password)
+            this.props.history.push("/")
+        }
     }
 
     handleUserName(event: React.FormEvent<HTMLInputElement>) {

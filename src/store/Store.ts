@@ -28,11 +28,17 @@ class Store {
     loginUser(username: string, password: string) {
         login(username, password)
             .then((response: UserObject) => store.user = response)
-            //@ts-ignore
-            .then(() => getAllVotedPostIdsByUserId(store.user.id))
-            //@ts-ignore
-            .then(postIds => store.user.votedPostIds = postIds)
-            .catch(e => console.log(e))
+            .catch(error => console.log(error))
+    }
+
+    @action
+    getAllVotedPostIdsByUser() {
+        if (store.user && store.user.id) {
+            getAllVotedPostIdsByUserId(store.user.id)
+                //@ts-ignore
+                .then(postIds => store.user.votedPostIds = postIds)
+                .catch(error => console.log(error))
+        }
     }
 }
 

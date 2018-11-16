@@ -20,7 +20,6 @@ class Store {
     @action
     getAllPosts() {
         getPosts(store.index, store.amount).then((r: any) => {
-            console.log(r.posts)
             store.posts = r.posts;
         }).catch(e => console.log(e))
     }

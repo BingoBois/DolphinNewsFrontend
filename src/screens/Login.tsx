@@ -2,12 +2,14 @@ import * as React from 'react';
 import '../stylesheets/loginStyle.css';
 import { Link } from 'react-router-dom'
 import Store from '../store/Store'
+import { observer } from 'mobx-react';
 
 interface userInfo {
     username: string | undefined,
     password: string | undefined
 }
 
+@observer
 class Login extends React.Component<any, userInfo> {
 
     state = {

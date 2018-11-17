@@ -23,7 +23,8 @@ class Login extends React.Component<any, userInfo> {
         } else {
             //@ts-ignore
             Store.loginUser(this.state.username, this.state.password)
-            this.props.history.push("/")
+                .then(() => this.props.history.push("/"))
+                .catch(() => alert("You have entered an invalid username or password"));
         }
     }
 

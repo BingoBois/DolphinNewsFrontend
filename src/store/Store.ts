@@ -26,9 +26,14 @@ class Store {
 
     @action
     loginUser(username: string, password: string) {
-        login(username, password)
-            .then((response: UserObject) => store.user = response)
-            .catch(error => console.log(error))
+        return new Promise((resolve, reject) => {
+            login(username, password)
+                .then((response: UserObject) => {
+                    store.user = response;
+                    resolve(response);
+                })
+                .catch(error => reject(error));
+        });
     }
 
     @action

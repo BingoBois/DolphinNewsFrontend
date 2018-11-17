@@ -11,8 +11,8 @@ enum HttpRequestType {
     Post
 }
 
-export function login(email: string, password: string) {
-    return new Promise((resolve, rejects) => {
+export function login(username: string, password: string) {
+    return new Promise((resolve, reject) => {
         fetch(API_URL + "/auth/login", {
             method: 'POST',
             headers: {
@@ -20,10 +20,10 @@ export function login(email: string, password: string) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                username: email,
+                username: username,
                 password: password
             }),
-        }).then(response => response.json()).then(response => resolve(response)).catch(err => rejects(err));
+        }).then(response => response.json()).then(response => resolve(response)).catch(err => reject(err));
     });
 }
 

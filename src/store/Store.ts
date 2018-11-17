@@ -29,8 +29,14 @@ class Store {
         return new Promise((resolve, reject) => {
             login(username, password)
                 .then((response: UserObject) => {
-                    store.user = response;
-                    resolve(response);
+                    //@ts-ignore
+                    if (response.message === "error") {
+                        reject(response)
+                    }
+                    else {
+                        store.user = response;
+                        resolve(response);
+                    }
                 })
                 .catch(error => reject(error));
         });

@@ -30,7 +30,7 @@ class Store {
             login(username, password)
                 .then((response: UserObject) => {
                     //@ts-ignore
-                    if (response.message === "error") {
+                    if (response.error === 500) {
                         reject(response)
                     }
                     else {

@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx';
 import { PostObject } from '../types/post'
-import { getPosts, login, getAllVotedPostIdsByUserId } from 'src/api/DataHandler';
+import { getPosts, login, getAllVotedPostIdsByUserId, getAllVotedCommentIdsByUserId } from 'src/api/DataHandler';
 import UserObject from 'src/types/user';
 
 class Store {
@@ -48,6 +48,16 @@ class Store {
             getAllVotedPostIdsByUserId(store.user.id)
                 //@ts-ignore
                 .then(postIds => store.user.votedPostIds = postIds)
+                .catch(error => console.log(error))
+        }
+    }
+
+    @action
+    getAllVotedCommentIdsByUser() {
+        if (store.user && store.user.id) {
+            getAllVotedCommentIdsByUserId(store.user.id)
+                //@ts-ignore
+                .then(commentIds => store.user.votedCommentIds = commentIds)
                 .catch(error => console.log(error))
         }
     }

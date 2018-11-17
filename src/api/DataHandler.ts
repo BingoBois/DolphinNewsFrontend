@@ -361,6 +361,15 @@ export function getAllVotedPostIdsByUserId(userId: number): Promise<Array<number
     });
 }
 
+export function getAllVotedCommentIdsByUserId(userId: number): Promise<Array<number>> {
+    return new Promise((resolve, rejects) => {
+        fetch(API_URL + "/comment/get/all/commentIds/userId/" + userId)
+            .then(response => response.json())
+            .then(data => resolve(data))
+            .catch(err => rejects(err));
+    });
+}
+
 /*
 export function createNewPost(post: object) {
     fetchData(API_URL, HttpRequestType.Post, post);

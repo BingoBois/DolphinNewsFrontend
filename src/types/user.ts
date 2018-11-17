@@ -5,5 +5,6 @@ export default interface UserObject {
     email: string;
     karma: number;
     role: "member" | "admin" | "moderator";
-    votedPostIds?: Array<number>
+    votedPostIds?: Array<number>;
+    votedCommentIds?: Array<number>
 }

@@ -3,7 +3,6 @@ import UserObject from '../types/user';
 import { PostObject } from 'src/types/post';
 import { CommentObject } from 'src/types/comment';
 
-
 const API_URL = "http://dolphin.viter.dk:3000";
 
 enum HttpRequestType {
@@ -97,7 +96,6 @@ export function getVotesAmounts(postId: number) {
     });
 }
 
-
 //Function for posting a new Topic/Story
 //Currently NOT BEING USED due to it requiring a hanesst_id/helge_id
 export function postNewTopic(username: string, password: string, postTitle: string, postURL: string, postText: string, hanesst_id: number) {
@@ -167,27 +165,23 @@ export function postNewStoryNonHelge(username: string, password: string, postTit
 
 }
 
-//Primary Method used in the Frontend
-//Method for posting a comment on a Story/Topic, with a hanesst_id/helge_id of 0
-export function postNewCommentNonHelge(username: string, password: string, postText: string, parentPostid: number) {
-    return new Promise((resolve, rejects) => {
-        fetch(API_URL + '/post/nonhelge', {
+// Primary Method used in the Frontend
+// Method for posting a comment on a Story/Topic/Post
+export function postNewCommentNonHelge(userId: number, parentPostId: number, commentText: string) {
+    return new Promise((resolve, reject) => {
+        fetch(API_URL + '/comment/nonhelge', {
             method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify({
-                username: username,
-                post_type: 'comment',
-                pwd_hash: password,
-                post_title: "",
-                post_url: "",
-                post_parent: parentPostid,
-                post_text: postText,
-                hanesst_id: 0
-            }),
-            headers: { 'Content-Type': 'application/json' },
-        })
-            .then(res => resolve(res.json()))
+                userId: userId,
+                parentPostId: parentPostId,
+                commentText: commentText
+            })
+        }).then(response => resolve(response)).catch(err => reject(err));
     });
-
 }
 
 /*

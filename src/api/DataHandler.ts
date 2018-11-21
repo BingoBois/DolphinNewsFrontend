@@ -245,7 +245,7 @@ export function getAllPosts(): Promise<Array<PostObject>> {
     });
 }
 
-export function getCommetsFromPostId(postId: number): Promise<Array<PostObject>> {
+export function getCommentsFromPostId(postId: number): Promise<Array<PostObject>> {
     return new Promise((resolve, rejects) => {
         fetch(API_URL + `/comment/get/bypost/${postId}`)
             .then(response => response.json())

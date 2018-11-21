@@ -11,8 +11,6 @@ interface PostState {
   postKarma: number | undefined,
   comments: Array<RealComment> | undefined,
   post_text: string | undefined
-  // username: string | undefined
-  // password: string | undefined
 }
 
 export default class PostScreen extends React.Component<any, PostState>{
@@ -23,9 +21,7 @@ export default class PostScreen extends React.Component<any, PostState>{
     postUrl: undefined,
     postKarma: undefined,
     comments: [],
-    post_text: undefined,
-    // username: undefined,
-    // password: undefined
+    post_text: undefined
   }
 
   componentWillMount() {

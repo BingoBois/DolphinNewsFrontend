@@ -143,26 +143,23 @@ export function postNewComment(username: string, password: string, postText: str
 }
 
 //Primary Method used in the Frontend
-//Method for posting a new Story/Topic, with a hanesst_id/helge_id of 0
-export function postNewStoryNonHelge(username: string, password: string, postTitle: string, postURL: string, postText: string) {
-    return new Promise((resolve, rejects) => {
+//Method for posting a new Story/Topic/Post
+export function postNewPostNonHelge(userId: number, postTitle: string, postURL: string, postText: string) {
+    return new Promise((resolve, reject) => {
         fetch(API_URL + '/post/nonhelge', {
             method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify({
-                username: username,
-                post_type: 'story',
-                pwd_hash: password,
-                post_title: postTitle,
-                post_url: postURL,
-                post_parent: -1,
-                post_text: postText,
-                hanesst_id: 0
-            }),
-            headers: { 'Content-Type': 'application/json' },
-        })
-            .then(res => resolve(res.json()))
+                userId: userId,
+                postTitle: postTitle,
+                postURL: postURL,
+                postText: postText
+            })
+        }).then(response => resolve(response)).catch(err => reject(err));
     });
-
 }
 
 // Primary Method used in the Frontend

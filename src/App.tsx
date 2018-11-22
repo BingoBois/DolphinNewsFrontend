@@ -10,7 +10,7 @@ import Login from './screens/Login';
 import Register from './screens/Register';
 import ResetPassword from './screens/ResetPassword';
 import PostScreen from './screens/PostScreen';
-import NewStoryScreen from './screens/NewStoryScreen';
+import NewPostScreen from './screens/NewPostScreen';
 
 
 class App extends React.Component {
@@ -25,7 +25,7 @@ class App extends React.Component {
                     <Route exact path="/register" component={Register} />
                     <Route exact path="/resetPassword" component={ResetPassword} />
                     <Route path="/post" component={PostScreen} />
-                    <Route exact path="/newstory" component={NewStoryScreen}/>
+                    <Route exact path="/newpost" component={NewPostScreen} />
                 </div>
             </Router>
         )

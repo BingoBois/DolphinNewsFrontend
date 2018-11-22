@@ -73,7 +73,7 @@ export default class PostScreen extends React.Component<any, PostState>{
         <form onSubmit={this.handleSubmit}>
           <label>
             <input
-              placeholder="Write comment here..."
+              placeholder="Type comment here..."
               type="text"
               style={{ width: "75%", height: "25px", lineHeight: "1.5em", marginBottom: "20px", display: "inline-block" }}
               onClick={() => store.user === undefined ? alert("You have to login to comment on posts!") : null}

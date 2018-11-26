@@ -9,6 +9,8 @@ export default class HeaderBar extends React.Component {
 
     filterByNew = () => {
         //TODO: Make multiple filters for each header button
+        //@ts-ignore
+        this.props.history.push("/newpost");
     }
 
     createNewPost = () => {
@@ -18,8 +20,7 @@ export default class HeaderBar extends React.Component {
 
     render() {
         const onClickEvents: Function[] = [this.filterByNew];
-        let headerArray = [{ option: 'welcome', loggedIn: true },
-        { option: 'new', loggedIn: false },
+        let headerArray = [{ option: 'new', loggedIn: false },
         { option: 'threads', loggedIn: true },
         { option: 'comments', loggedIn: false },
         { option: 'show', loggedIn: false },
@@ -28,7 +29,7 @@ export default class HeaderBar extends React.Component {
         { option: 'submit', loggedIn: false }
         ];
         const options = headerArray.map((obj, index) => {
-            if (obj.loggedIn && !Store.token) {
+            if (obj.loggedIn && !Store.user) {
                 return (
                     <div key={obj.option} />
                 )

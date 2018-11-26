@@ -5,7 +5,6 @@ import UserObject from 'src/types/user';
 
 class Store {
 
-    @observable token: string | undefined = undefined;
     @observable posts: Array<PostObject> = [];
     @observable index: number = 0;
     @observable amount: number = 20;

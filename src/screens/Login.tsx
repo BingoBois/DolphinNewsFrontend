@@ -2,12 +2,14 @@ import * as React from 'react';
 import '../stylesheets/loginStyle.css';
 import { Link } from 'react-router-dom'
 import Store from '../store/Store'
+import { observer } from 'mobx-react';
 
 interface userInfo {
     username: string | undefined,
     password: string | undefined
 }
 
+@observer
 class Login extends React.Component<any, userInfo> {
 
     state = {
@@ -16,9 +18,14 @@ class Login extends React.Component<any, userInfo> {
     }
 
     login() {
-        //@ts-ignore
-        Store.loginUser(this.state.username, this.state.password)
-        this.props.history.push("/")
+        if (this.state.username === undefined || this.state.password === undefined || this.state.username === "" || this.state.password === "") {
+            alert("Please enter an username and a password!")
+        } else {
+            //@ts-ignore
+            Store.loginUser(this.state.username, this.state.password)
+                .then(() => this.props.history.push("/"))
+                .catch(() => alert("You have entered an invalid username or password"));
+        }
     }
 
     handleUserName(event: React.FormEvent<HTMLInputElement>) {

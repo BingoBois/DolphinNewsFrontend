@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import '../stylesheets/rowStyles.css';
 import { getCommentAmount, getVotesAmounts, votePost, unvotePost } from '../api/DataHandler'
 import Store from '../store/Store'
+import { observer } from 'mobx-react';
 
 interface PostState {
     votes: number,
@@ -27,6 +28,7 @@ interface timeObject {
     days: number;
 }
 
+@observer
 export default class Post extends React.Component<PostProps, PostState> {
 
     constructor(props: PostProps) {
@@ -42,7 +44,7 @@ export default class Post extends React.Component<PostProps, PostState> {
         await getCommentAmount(this.props.id).then(r => this.setState({ comments: r.commentAmount }));
         // @ts-ignore
         await getVotesAmounts(this.props.id).then(r => this.setState({ votes: r.votes }));
-
+        await Store.getAllVotedPostIdsByUser();
     }
 
     upvoteMargin = (xOffset: number) => {
@@ -51,7 +53,7 @@ export default class Post extends React.Component<PostProps, PostState> {
     }
 
     upvote = (e: any) => {
-        if (Store.user.username === "") {
+        if (Store.user === undefined) {
             alert("You have to login to upvote posts!")
         } else {
             const userId = Store.user.id;
@@ -123,7 +125,7 @@ export default class Post extends React.Component<PostProps, PostState> {
             <div className="dataRow">
                 <div className="mainRow">
                     <p className="rowNumber" ref={`rowNumber${this.props.id}`}>{this.props.index}.</p>
-                    <img className="upvoteArrow" src={require('../assets/green_arrow.png')} onClick={(e) => this.upvote(e)} />
+                    {Store.user && Store.user.votedPostIds && Store.user.votedPostIds.includes(this.props.id) ? <img className="clickedArrow" src={require('../assets/green_arrow.png')} onClick={(e) => this.upvote(e)} /> : <img className="upvoteArrow" src={require('../assets/green_arrow.png')} onClick={(e) => this.upvote(e)} />}
                     <p className="rowText" ref={`rowText${this.props.id}`}>{this.props.title}</p>
                     <p className="urlText">({this.extractDomain(this.props.url)})</p>
                 </div>

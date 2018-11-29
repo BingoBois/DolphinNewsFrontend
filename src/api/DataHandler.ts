@@ -3,7 +3,6 @@ import UserObject from '../types/user';
 import { PostObject } from 'src/types/post';
 import { CommentObject } from 'src/types/comment';
 
-
 const API_URL = "http://dolphin.viter.dk:3000";
 
 enum HttpRequestType {
@@ -11,8 +10,8 @@ enum HttpRequestType {
     Post
 }
 
-export function login(email: string, password: string){
-    return new Promise((resolve, rejects) => {
+export function login(username: string, password: string) {
+    return new Promise((resolve, reject) => {
         fetch(API_URL + "/auth/login", {
             method: 'POST',
             headers: {
@@ -20,10 +19,10 @@ export function login(email: string, password: string){
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                username: email,
+                username: username,
                 password: password
             }),
-        }).then(response => response.json()).then(response => resolve(response)).catch(err => rejects(err));
+        }).then(response => response.json()).then(response => resolve(response)).catch(err => reject(err));
     });
 }
 
@@ -49,7 +48,7 @@ export function register(username: string | undefined, email: string | undefined
     console.log(newUser);
     fetchData('auth/register', HttpRequestType.Post, JSON.stringify(newUser)).then((response) => {
         response.json().then((data) => {
-            let resp = <tempResponse> data;
+            let resp = <tempResponse>data;
             console.log(resp.message);
         })
     }).catch((err) => {
@@ -57,139 +56,131 @@ export function register(username: string | undefined, email: string | undefined
     });
 }
 
-export function getPosts(index: number, amount: number){
+export function getPosts(index: number, amount: number) {
     return new Promise((resolve, rejects) => {
-        fetch(API_URL+'/post/getPosts',{ 
+        fetch(API_URL + '/post/getPosts', {
             method: 'POST',
-            body:    JSON.stringify({
+            body: JSON.stringify({
                 index: index,
                 amount: amount
             }),
             headers: { 'Content-Type': 'application/json' },
         })
-        .then(res => resolve(res.json()))
+            .then(res => resolve(res.json()))
     });
 }
 
-export function getCommentAmount(postId: number){
+export function getCommentAmount(postId: number) {
     return new Promise((resolve, rejects) => {
-        fetch(API_URL+'/post/getCommentAmount',{ 
+        fetch(API_URL + '/post/getCommentAmount', {
             method: 'POST',
-            body:    JSON.stringify({
+            body: JSON.stringify({
                 postId: postId
             }),
             headers: { 'Content-Type': 'application/json' },
         })
-        .then(res => resolve(res.json()))
+            .then(res => resolve(res.json()))
     });
 }
 
-export function getVotesAmounts(postId: number){
+export function getVotesAmounts(postId: number) {
     return new Promise((resolve, rejects) => {
-        fetch(API_URL+'/post/getVotes',{ 
+        fetch(API_URL + '/post/getVotes', {
             method: 'POST',
-            body:    JSON.stringify({
+            body: JSON.stringify({
                 postId: postId
             }),
             headers: { 'Content-Type': 'application/json' },
         })
-        .then(res => resolve(res.json()))
+            .then(res => resolve(res.json()))
     });
 }
-
 
 //Function for posting a new Topic/Story
 //Currently NOT BEING USED due to it requiring a hanesst_id/helge_id
-export function postNewTopic(username: string, password: string,postTitle: string, postURL: string, postText: string, hanesst_id: number){
+export function postNewTopic(username: string, password: string, postTitle: string, postURL: string, postText: string, hanesst_id: number) {
     return new Promise((resolve, rejects) => {
-        fetch(API_URL+'/post/',{ 
+        fetch(API_URL + '/post/', {
             method: 'POST',
-            body:    JSON.stringify({
-                username: username, 
-                post_type: 'story', 
-                pwd_hash: password, 
+            body: JSON.stringify({
+                username: username,
+                post_type: 'story',
+                pwd_hash: password,
                 post_title: postTitle,
-                post_url: postURL, 
-                post_parent: -1, 
-                hanesst_id: hanesst_id, 
+                post_url: postURL,
+                post_parent: -1,
+                hanesst_id: hanesst_id,
                 post_text: postText
             }),
             headers: { 'Content-Type': 'application/json' },
         })
-        .then(res => resolve(res.json()))
+            .then(res => resolve(res.json()))
     });
-    
+
 }
 
 //Function for Posting a new comment to a topic/post
 //Currently NOT BEING USED due to it requiring a hanesst_id/helge_id
-export function postNewComment(username: string, password: string, postText: string, postParentId_hanesst_id: number, hanesst_id: number){
+export function postNewComment(username: string, password: string, postText: string, postParentId_hanesst_id: number, hanesst_id: number) {
     return new Promise((resolve, rejects) => {
-        fetch(API_URL+'/post/',{ 
+        fetch(API_URL + '/post/', {
             method: 'POST',
-            body:    JSON.stringify({
-                username: username, 
-                post_type: 'comment', 
-                pwd_hash: password, 
+            body: JSON.stringify({
+                username: username,
+                post_type: 'comment',
+                pwd_hash: password,
                 post_title: "",
-                post_url: "", 
-                post_parent: postParentId_hanesst_id, 
-                hanesst_id: hanesst_id, 
+                post_url: "",
+                post_parent: postParentId_hanesst_id,
+                hanesst_id: hanesst_id,
                 post_text: postText
             }),
             headers: { 'Content-Type': 'application/json' },
         })
-        .then(res => resolve(res.json()))
+            .then(res => resolve(res.json()))
     });
-    
+
 }
 
 //Primary Method used in the Frontend
-//Method for posting a new Story/Topic, with a hanesst_id/helge_id of 0
-export function postNewStoryNonHelge(username: string, password: string, postTitle: string, postURL: string, postText: string){
-    return new Promise((resolve, rejects) => {
-        fetch(API_URL+'/post/nonhelge',{ 
+//Method for posting a new Story/Topic/Post
+export function postNewPostNonHelge(userId: number, postTitle: string, postURL: string, postText: string) {
+    return new Promise((resolve, reject) => {
+        fetch(API_URL + '/post/nonhelge', {
             method: 'POST',
-            body:    JSON.stringify({
-                username: username, 
-                post_type: 'story', 
-                pwd_hash: password, 
-                post_title: postTitle,
-                post_url: postURL, 
-                post_parent: -1, 
-                post_text: postText,
-                hanesst_id: 0
-            }),
-            headers: { 'Content-Type': 'application/json' },
-        })
-        .then(res => resolve(res.json()))
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                userId: userId,
+                postTitle: postTitle,
+                postURL: postURL,
+                postText: postText
+            })
+        }).then(response => resolve(response)).catch(err => reject(err));
     });
-    
 }
 
-//Primary Method used in the Frontend
-//Method for posting a comment on a Story/Topic, with a hanesst_id/helge_id of 0
-export function postNewCommentNonHelge(username: string, password: string, postText: string, parentPostid: number){
-    return new Promise((resolve, rejects) => {
-        fetch(API_URL+'/post/nonhelge',{ 
+// Primary Method used in the Frontend
+// Method for posting a comment on a Story/Topic/Post
+export function postNewCommentNonHelge(userId: number, parentPostId: number, commentText: string) {
+    return new Promise((resolve, reject) => {
+        fetch(API_URL + '/comment/nonhelge', {
             method: 'POST',
-            body:    JSON.stringify({
-                username: username, 
-                post_type: 'comment', 
-                pwd_hash: password, 
-                post_title: "",
-                post_url: "", 
-                post_parent: parentPostid, 
-                post_text: postText,
-                hanesst_id: 0
-            }),
-            headers: { 'Content-Type': 'application/json' },
-        })
-        .then(res => resolve(res.json()))
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                userId: userId,
+                parentPostId: parentPostId,
+                commentText: commentText
+            })
+        }).then(response => resolve(response)).catch(err => reject(err));
     });
-    
 }
-       
+
 /*
 
 TODO
@@ -232,67 +223,67 @@ export function fetchData(url: string, requestType: HttpRequestType, bodyData?: 
 }
 
 
-export function getPostById(postId: number): Promise<Array<PostObject>>{
+export function getPostById(postId: number): Promise<Array<PostObject>> {
     return new Promise((resolve, rejects) => {
-        fetch( API_URL+ `/post/get/byid/${postId}`)
-        .then(response => response.json())
-        .then(data => resolve(JSON.parse(data)))
-        .catch(err => rejects(err));
+        fetch(API_URL + `/post/get/byid/${postId}`)
+            .then(response => response.json())
+            .then(data => resolve(JSON.parse(data)))
+            .catch(err => rejects(err));
     });
 }
 
 
-export function getAllPosts(): Promise<Array<PostObject>>{
+export function getAllPosts(): Promise<Array<PostObject>> {
     return new Promise((resolve, rejects) => {
-        fetch( API_URL+ "/post/get/All")
-        .then(response => response.json())
-        .then(data => resolve(JSON.parse(data)))
-        .catch(err => rejects(err));
+        fetch(API_URL + "/post/get/All")
+            .then(response => response.json())
+            .then(data => resolve(JSON.parse(data)))
+            .catch(err => rejects(err));
     });
 }
 
-export function getCommetsFromPostId(postId: number): Promise<Array<PostObject>>{
+export function getCommentsFromPostId(postId: number): Promise<Array<PostObject>> {
     return new Promise((resolve, rejects) => {
-        fetch( API_URL+ `/comment/get/bypost/${postId}`)
-        .then(response => response.json())
-        .then(data => resolve(JSON.parse(data)))
-        .catch(err => rejects(err));
+        fetch(API_URL + `/comment/get/bypost/${postId}`)
+            .then(response => response.json())
+            .then(data => resolve(JSON.parse(data)))
+            .catch(err => rejects(err));
     });
 }
 
-export function getAllPostVotes(): Promise<Array<PostObject>>{
+export function getAllPostVotes(): Promise<Array<PostObject>> {
     return new Promise((resolve, rejects) => {
-        fetch( API_URL + "/post/get/all/postwithvotes")
-        .then(response => response.json())
-        .then(data => resolve(JSON.parse(data)))
-        .catch(err => rejects(err));
+        fetch(API_URL + "/post/get/all/postwithvotes")
+            .then(response => response.json())
+            .then(data => resolve(JSON.parse(data)))
+            .catch(err => rejects(err));
     });
 }
 
-export function getAmountofCommentsInPost(): Promise<Array<PostObject>>{
+export function getAmountofCommentsInPost(): Promise<Array<PostObject>> {
     return new Promise((resolve, rejects) => {
-        fetch( API_URL + "/post/get/all/commentamount")
-        .then(response => response.json())
-        .then(data => resolve(JSON.parse(data)))
-        .catch(err => rejects(err));
+        fetch(API_URL + "/post/get/all/commentamount")
+            .then(response => response.json())
+            .then(data => resolve(JSON.parse(data)))
+            .catch(err => rejects(err));
     });
 }
 
-export function getAllCommentsWithVote(): Promise<Array<CommentObject>>{
+export function getAllCommentsWithVote(): Promise<Array<CommentObject>> {
     return new Promise((resolve, rejects) => {
-        fetch( API_URL + "/comment/get/all/withvote")
-        .then(response => response.json())
-        .then(data => resolve(JSON.parse(data)))
-        .catch(err => rejects(err));
+        fetch(API_URL + "/comment/get/all/withvote")
+            .then(response => response.json())
+            .then(data => resolve(JSON.parse(data)))
+            .catch(err => rejects(err));
     });
 }
 
-export function getAllComments(): Promise<Array<CommentObject>>{
+export function getAllComments(): Promise<Array<CommentObject>> {
     return new Promise((resolve, rejects) => {
-        fetch(API_URL+ "/comment/get/all")
-        .then(response => response.json())
-        .then(data => resolve(JSON.parse(data)))
-        .catch(err => rejects(err));
+        fetch(API_URL + "/comment/get/all")
+            .then(response => response.json())
+            .then(data => resolve(JSON.parse(data)))
+            .catch(err => rejects(err));
     });
 }
 
@@ -352,6 +343,23 @@ export function unvoteComment(userId: number, commentId: number) {
     });
 }
 
+export function getAllVotedPostIdsByUserId(userId: number): Promise<Array<number>> {
+    return new Promise((resolve, rejects) => {
+        fetch(API_URL + "/post/get/all/postIds/userId/" + userId)
+            .then(response => response.json())
+            .then(data => resolve(data))
+            .catch(err => rejects(err));
+    });
+}
+
+export function getAllVotedCommentIdsByUserId(userId: number): Promise<Array<number>> {
+    return new Promise((resolve, rejects) => {
+        fetch(API_URL + "/comment/get/all/commentIds/userId/" + userId)
+            .then(response => response.json())
+            .then(data => resolve(data))
+            .catch(err => rejects(err));
+    });
+}
 
 /*
 export function createNewPost(post: object) {
